@@ -20,7 +20,6 @@
   --accent:#4FC3A6; --accent-ink:#0B1A15; --accent-soft:#1D3A32;
   --pos:#6BCB8B; --neg:#F08A7E; --xfer:#A3A6EE; --shared:#E2B266; --shared-soft:#3A2F1C; color-scheme:dark}
 *{box-sizing:border-box}
-[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:24px 48px}
 .wrap{max-width:1080px;margin:0 auto;display:grid;gap:20px}
 h1,h2{font-family:var(--display);margin:0;text-wrap:balance}
@@ -42,7 +41,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .month-nav{display:flex;align-items:center;gap:6px}
 .month-nav span{min-width:9.5em;text-align:center;font-weight:600}
 .month-nav button{padding:6px 10px}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .stat{background:var(--surface);padding:14px 16px;display:grid;gap:4px;min-width:0}
 .stat .v{font-size:1.35rem;font-weight:600}
 .stat .s{font-size:.8rem;color:var(--muted)}
@@ -87,61 +86,11 @@ form{display:grid;gap:10px}
 .empty{color:var(--muted);padding:24px 0;text-align:center}
 .status{font-size:.8rem;color:var(--muted)}
 .settings{display:grid;gap:12px}
-.settings .list-edit{display:grid;gap:6px;align-content:start}
+.settings .list-edit{display:grid;gap:6px}
 .settings .item{display:flex;gap:6px}
 .settings .item button{flex:none}
 details summary{cursor:pointer;font-weight:600}
 @media (prefers-reduced-motion:no-preference){button{transition:background .15s,color .15s}}
-.acct-row .k small{display:block;font-size:.78rem;color:var(--muted)}
-.check-ok{font-size:.8rem;color:var(--pos)}.check-bad{font-size:.8rem;color:var(--neg)}
-.flow{display:grid;gap:8px}
-.flowbar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--accent-soft)}
-.flowbar .sp{background:var(--neg)}.flowbar .rm{background:var(--pos)}
-.flowlegend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem}
-.flowlegend b{font-weight:600}
-.tablewrap{overflow-x:auto}
-table.cats{width:100%;border-collapse:collapse;font-size:.92rem}
-table.cats th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
-table.cats td{padding:8px;border-bottom:1px dashed var(--line);white-space:nowrap}
-table.cats th.n,table.cats td.n{text-align:right}
-table.cats tfoot td{border-bottom:0;font-weight:600}
-.catbar{display:block;height:4px;border-radius:2px;background:var(--neg);margin-top:4px;opacity:.55}
-.quick{display:grid;gap:6px;padding-bottom:12px;border-bottom:1px solid var(--line)}
-.quick .item{display:flex;gap:6px}
-.quick .item button{flex:none}
-.quick small{color:var(--muted);font-size:.78rem}
-.field.need select,.field.need input{border-color:var(--neg)}
-.form-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.tx .btns{display:flex;gap:6px}
-.edit-row{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
-.settings .item input.ob{max-width:9.5em}
-.top-actions .seg.period{grid-template-columns:repeat(2,1fr);min-width:9em}
-.cmp{font-size:.76rem}
-.tx .note{font-size:.8rem;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
-.duesum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.duesum>div{background:var(--surface);padding:12px 14px;display:grid;gap:2px;min-width:0}
-.duesum .v{font-size:1.15rem;font-weight:600}
-@media (max-width:620px){.duesum{grid-template-columns:minmax(0,1fr)}}
-.loans{display:grid}
-.loan{display:grid;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
-.loan:last-child{border-bottom:0}
-.loan.paid{opacity:.7}
-.loan-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
-.loan-top .who{font-weight:600;overflow-wrap:anywhere}
-.loan-nums{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.85rem;color:var(--muted)}
-.loan-nums b{color:var(--ink);font-weight:600}
-.pill{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;white-space:nowrap}
-.pill.out{background:var(--neg);color:var(--surface)}
-.pill.part{background:var(--shared-soft);color:var(--shared)}
-.pill.paid{background:var(--accent-soft);color:var(--pos)}
-.overdue{color:var(--neg);font-weight:600}
-.reps{display:grid;gap:4px;padding-left:12px;border-left:2px solid var(--line);font-size:.83rem}
-.reps .rep{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:center}
-.reps .rep span{color:var(--muted)}
-.subform{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
-.subform .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5em,1fr));gap:10px}
-.dueactions{display:flex;flex-wrap:wrap;gap:6px}
-.subh{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:6px}
 </style>
 
 <div class="wrap">
@@ -149,91 +98,39 @@ table.cats tfoot td{border-bottom:0;font-weight:600}
     <div class="total">
       <div class="label">Total Money</div>
       <div class="amt num" id="totalAmt">$0.00</div>
-      <p id="dueNote" class="num" style="margin-top:4px;color:var(--ink)"></p>
-      <p id="totalNote">Opening balances plus income minus expenses. Transfers between accounts don't change it.</p>
+      <p>All income minus all expenses. Transfers between accounts don't change it.</p>
     </div>
     <div class="top-actions">
-      <div class="seg period" role="group" aria-label="View">
-        <button type="button" data-period="month" aria-pressed="true">Month</button>
-        <button type="button" data-period="week" aria-pressed="false">Week</button>
-      </div>
-      <div class="month-nav" aria-label="Period">
-        <button class="ghost" id="prevM" aria-label="Previous">‹</button>
+      <div class="month-nav" aria-label="Month">
+        <button class="ghost" id="prevM" aria-label="Previous month">‹</button>
         <span id="monthLbl" class="num"></span>
-        <button class="ghost" id="nextM" aria-label="Next">›</button>
+        <button class="ghost" id="nextM" aria-label="Next month">›</button>
       </div>
     </div>
   </header>
 
-  <section class="stats" aria-label="This period">
-    <div class="stat"><span class="label">Total Income</span><span class="v num pos" id="sIncome">$0.00</span><span class="s" id="sIncomeN">0 entries</span><span class="s cmp" id="sIncomeC" hidden></span></div>
-    <div class="stat"><span class="label">Total Expenses</span><span class="v num neg" id="sExpense">$0.00</span><span class="s" id="sExpenseN">0 entries</span><span class="s cmp" id="sExpenseC" hidden></span></div>
-    <div class="stat"><span class="label">Net Change</span><span class="v num" id="sNet">$0.00</span><span class="s">Change to Total Money</span><span class="s cmp" id="sNetC" hidden></span></div>
-    <div class="stat"><span class="label">% Spent</span><span class="v num" id="sPctSpent">—</span><span class="s">Expenses ÷ income</span></div>
-    <div class="stat"><span class="label">% Remaining</span><span class="v num" id="sPctRem">—</span><span class="s">Net change ÷ income</span></div>
-    <div class="stat"><span class="label">Top Category</span><span class="v num" id="sTop">—</span><span class="s" id="sTopS">No expenses yet</span></div>
+  <section class="stats" aria-label="This month">
+    <div class="stat"><span class="label">Income</span><span class="v num pos" id="sIncome">$0.00</span><span class="s" id="sIncomeN">0 entries</span></div>
+    <div class="stat"><span class="label">Expenses</span><span class="v num neg" id="sExpense">$0.00</span><span class="s" id="sExpenseN">0 entries</span></div>
+    <div class="stat"><span class="label">Net change</span><span class="v num" id="sNet">$0.00</span><span class="s">Change to Total Money</span></div>
+    <div class="stat"><span class="label">Shared expenses</span><span class="v num" id="sShared">$0.00</span><span class="s" id="sSharedS">0% of expenses</span></div>
   </section>
 
   <div class="row2">
     <section class="panel">
-      <div class="kv" style="border:0;padding:0"><h2>Accounts</h2><span class="label">Current Balance</span></div>
+      <h2>Accounts</h2>
       <div id="acctList"></div>
       <div class="kv"><span class="k label">Sum of accounts</span><span class="num" id="acctSum">$0.00</span></div>
-      <div id="acctCheck" class="check-ok"></div>
     </section>
     <section class="panel">
-      <h2 id="peopleH">Income by person, this month</h2>
+      <h2>Paid by, this month</h2>
       <div id="paidList"></div>
     </section>
   </div>
 
-  <section class="panel" aria-labelledby="wentH">
-    <h2 id="wentH">Where Our Money Went</h2>
-    <div class="flow">
-      <div class="flowbar" id="flowBar" aria-hidden="true"><span class="sp" id="flowSp" style="width:0"></span><span class="rm" id="flowRm" style="width:0"></span></div>
-      <div class="flowlegend num"><span>Income <b id="fIncPct">—</b></span><span class="neg">Spent <b id="fSpPct">—</b></span><span class="pos">Remaining <b id="fRmPct">—</b></span></div>
-    </div>
-    <div class="tablewrap">
-      <table class="cats num">
-        <thead><tr><th>Category</th><th class="n">Amount</th><th class="n">% of Spending</th><th class="n">% of Income</th></tr></thead>
-        <tbody id="catBody"></tbody>
-        <tfoot id="catFoot"></tfoot>
-      </table>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="dueH" id="dueSection">
-    <div class="form-head"><h2 id="dueH">Outstanding Due</h2><button type="button" id="lendBtn">Lend money</button></div>
-    <p class="status" style="margin:0">Money we have lent and expect back. Lending and repayments move money between our accounts and Outstanding Due. They are not income or expenses.</p>
-    <div class="duesum num">
-      <div><span class="label">Total Money</span><span class="v" id="dTotal">$0.00</span></div>
-      <div><span class="label">Outstanding Due</span><span class="v" id="dDue">$0.00</span></div>
-      <div><span class="label">Total Money + Outstanding Due</span><span class="v" id="dBoth">$0.00</span></div>
-    </div>
-    <form class="subform" id="loanForm" hidden novalidate>
-      <strong id="loanFormH">Lend money</strong>
-      <div class="row">
-        <div class="field"><label for="lName">Person / Name</label><input id="lName" autocomplete="off" placeholder="Sarah"></div>
-        <div class="field"><label for="lAmount">Amount Lent (AUD)</label><input id="lAmount" inputmode="decimal" placeholder="0.00" autocomplete="off"></div>
-        <div class="field"><label for="lDate">Date Lent</label><input id="lDate" type="date"></div>
-        <div class="field"><label for="lAccount">Lent from account</label><select id="lAccount"></select></div>
-        <div class="field"><label for="lDue">Due Date (optional)</label><input id="lDue" type="date"></div>
-      </div>
-      <div class="field"><label for="lNotes">Notes</label><input id="lNotes" autocomplete="off" placeholder="Optional"></div>
-      <div class="dueactions"><button class="primary" type="submit" id="lSubmit">Save loan</button><button type="button" class="ghost" id="lCancel">Cancel</button></div>
-      <div class="msg" id="lMsg" role="status"></div>
-    </form>
-    <div class="loans" id="loanList"><div class="empty">Loading…</div></div>
-  </section>
-
   <div class="main">
     <section class="panel" aria-labelledby="addH">
-      <div class="quick">
-        <label class="label" for="qInput">Quick entry</label>
-        <div class="item"><input id="qInput" placeholder="-50 Uber nab" autocomplete="off"><button type="button" id="qGo">Add</button></div>
-        <small>+ for income, − for expense, or “transfer 200 nab to cash”. Name the account (and who earned income), or I’ll ask.</small>
-      </div>
-      <div class="form-head"><h2 id="addH">Add a transaction</h2><button type="button" class="ghost" id="fCancel" hidden>Cancel edit</button></div>
+      <h2 id="addH">Add a transaction</h2>
       <div class="seg" role="group" aria-label="Type">
         <button type="button" data-type="expense" aria-pressed="true">Expense</button>
         <button type="button" data-type="income" aria-pressed="false">Income</button>
@@ -244,14 +141,15 @@ table.cats tfoot td{border-bottom:0;font-weight:600}
           <div class="field"><label for="fAmount">Amount (AUD)</label><input id="fAmount" inputmode="decimal" placeholder="0.00" autocomplete="off"></div>
           <div class="field"><label for="fDate">Date</label><input id="fDate" type="date"></div>
         </div>
-        <div class="field" data-for="expense"><label for="fCat">Category</label><input id="fCat" list="catList" placeholder="Optional" autocomplete="off"><datalist id="catList"></datalist></div>
-        <div class="field"><label for="fDesc" id="fDescLbl">Description</label><input id="fDesc" placeholder="Uber to uni, weekly shop…" autocomplete="off"></div>
+        <div class="field"><label for="fDesc">Description</label><input id="fDesc" placeholder="Groceries, rent, pay…" autocomplete="off"></div>
+        <div class="field" data-for="income expense"><label for="fCat">Category</label><input id="fCat" list="catList" placeholder="Optional" autocomplete="off"><datalist id="catList"></datalist></div>
         <div class="two">
           <div class="field"><label for="fAccount" id="fAccountLbl">Account</label><select id="fAccount"></select></div>
           <div class="field" data-for="transfer"><label for="fTo">To account</label><select id="fTo"></select></div>
-          <div class="field" data-for="income"><label for="fEarnedBy">Earned by</label><select id="fEarnedBy"></select></div>
+          <div class="field" data-for="expense"><label for="fPaidBy">Paid by</label><select id="fPaidBy"></select></div>
+          <div class="field" data-for="income"><label for="fReceivedBy">Received by</label><select id="fReceivedBy"></select></div>
         </div>
-        <div class="field"><label for="fNotes">Notes</label><input id="fNotes" placeholder="Optional" autocomplete="off"></div>
+        <label class="check" data-for="expense" for="fShared"><input type="checkbox" id="fShared"><span>Shared<small>This expense relates to both people.</small></span></label>
         <button class="primary" type="submit" id="fSubmit">Add expense</button>
         <div class="msg" id="fMsg" role="status"></div>
       </form>
@@ -259,12 +157,13 @@ table.cats tfoot td{border-bottom:0;font-weight:600}
 
     <section class="panel" aria-labelledby="listH">
       <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-        <h2 id="listH">Recent Transactions</h2>
+        <h2 id="listH">Transactions</h2>
         <div class="filters" role="group" aria-label="Filter">
           <button class="chip" data-f="all" aria-pressed="true">All</button>
           <button class="chip" data-f="income" aria-pressed="false">Income</button>
           <button class="chip" data-f="expense" aria-pressed="false">Expenses</button>
           <button class="chip" data-f="transfer" aria-pressed="false">Transfers</button>
+          <button class="chip" data-f="shared" aria-pressed="false">Shared</button>
         </div>
       </div>
       <div class="list" id="txList"><div class="empty">Loading your transactions…</div></div>
@@ -273,19 +172,15 @@ table.cats tfoot td{border-bottom:0;font-weight:600}
 
   <section class="panel">
     <details>
-      <summary>People, accounts and categories</summary>
+      <summary>People and accounts</summary>
       <div class="settings" style="margin-top:12px">
         <div class="row2">
           <div class="list-edit">
             <span class="label">People</span>
             <div id="peopleEdit"></div>
-            <span class="label" style="margin-top:10px">Categories</span>
-            <div id="catEdit"></div>
-            <div class="item"><input id="newCat" placeholder="New category"><button type="button" id="addCat">Add</button></div>
           </div>
           <div class="list-edit">
-            <span class="label">Accounts and opening balances</span>
-            <span class="status" id="openingNote"></span>
+            <span class="label">Accounts</span>
             <div id="acctEdit"></div>
             <div class="item"><input id="newAcct" placeholder="New account name"><button type="button" id="addAcct">Add</button></div>
           </div>
@@ -302,460 +197,195 @@ table.cats tfoot td{border-bottom:0;font-weight:600}
 const $=s=>document.querySelector(s);
 const fmt=new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'});
 const money=c=>fmt.format((c||0)/100);
-const pct=(part,whole)=>{if(!whole)return '—';const v=part/whole*100;return (Math.abs(v-Math.round(v))<0.05?Math.round(v):v.toFixed(1))+'%'};
-const OPENING_DATE='2026-10-01';
-const DEFAULT_CATS=['Rent','Groceries','Transport','Myki','Uber','Petrol','Car','Mobile','Insurance','Health','Food','Makeup','Skincare','Shopping','Entertainment','Subscriptions','Loan','Miscellaneous'];
-const DEFAULT_CFG={
-  people:[{id:'p1',name:'Raman'},{id:'p2',name:'Robin'}],
-  accounts:[{id:'a2',name:'Cash',opening:122500},{id:'a1',name:'NAB',opening:277380},{id:'a3',name:'Commonwealth',opening:0}],
-  categories:DEFAULT_CATS.slice(), openingDate:OPENING_DATE
-};
-const clone=o=>JSON.parse(JSON.stringify(o));
-let cfg=clone(DEFAULT_CFG);
-let txs=[]; let loans=[]; let loansLoaded=false; let db=null; let canWrite=true;
-let type='expense', filter='all', editingId=null;
+const DEFAULT_CFG={people:[{id:'p1',name:'Person 1'},{id:'p2',name:'Person 2'}],accounts:[{id:'a1',name:'Bank account'},{id:'a2',name:'Cash'}]};
+let cfg=JSON.parse(JSON.stringify(DEFAULT_CFG));
+let txs=[]; let db=null; let canWrite=true;
+let type='expense', filter='all';
 const now=new Date(); let viewY=now.getFullYear(), viewM=now.getMonth();
-const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-const today=()=>iso(new Date());
-// Weeks run Monday to Sunday
-const mondayOf=d=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
-let period='month', weekStart=mondayOf(now);
-function range(){
-  if(period==='week'){const e=new Date(weekStart);e.setDate(e.getDate()+6);return {start:iso(weekStart),end:iso(e),startD:new Date(weekStart),endD:e}}
-  const s=new Date(viewY,viewM,1), e=new Date(viewY,viewM+1,0); return {start:iso(s),end:iso(e),startD:s,endD:e};
-}
-function prevRange(){const s=new Date(viewY,viewM-1,1),e=new Date(viewY,viewM,0);return {start:iso(s),end:iso(e)}}
-function goToDate(dateStr){const [y,m,d]=dateStr.split('-').map(Number);viewY=y;viewM=m-1;weekStart=mondayOf(new Date(y,m-1,d))}
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 $('#fDate').value=today();
 
 const nameOf=(list,id)=>{const x=list.find(i=>i.id===id);return x?x.name:'(removed)'};
 const monthKey=()=>viewY+'-'+String(viewM+1).padStart(2,'0');
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e};
-const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
-const earnerOf=t=>t.earnedBy||t.receivedBy||'other';
-const earnerName=id=>id==='other'?'Other':nameOf(cfg.people,id);
-const catKey=c=>{const n=norm(c);const hit=cfg.categories.find(x=>norm(x)===n);return hit||c};
 
-// ---- calculations (pure) ----
-function computeBalances(cfg,txs,loans){
-  const acct={}; let opening=0;
-  cfg.accounts.forEach(a=>{acct[a.id]=a.opening||0;opening+=a.opening||0});
-  let total=opening;
+function render(){
+  // Total Money: every income adds, every expense subtracts, transfers ignored
+  let total=0; const acct={}; cfg.accounts.forEach(a=>acct[a.id]=0);
   for(const t of txs){
     if(t.type==='income'){total+=t.amount; acct[t.account]=(acct[t.account]||0)+t.amount}
     else if(t.type==='expense'){total-=t.amount; acct[t.account]=(acct[t.account]||0)-t.amount}
     else if(t.type==='transfer'){acct[t.account]=(acct[t.account]||0)-t.amount; acct[t.toAccount]=(acct[t.toAccount]||0)+t.amount}
   }
-  // Lending: money leaves the account and Total Money; repayments come back into the chosen account.
-  let due=0;
-  for(const l of (loans||[])){
-    total-=l.amount; acct[l.account]=(acct[l.account]||0)-l.amount;
-    let repaid=0;
-    for(const r of (l.repayments||[])){total+=r.amount; acct[r.account]=(acct[r.account]||0)+r.amount; repaid+=r.amount}
-    due+=Math.max(0,l.amount-repaid);
-  }
-  return {opening,total,acct,due};
-}
-const repaidOf=l=>(l.repayments||[]).reduce((s,r)=>s+r.amount,0);
-const statusOf=l=>{const r=repaidOf(l);return r>=l.amount?'Paid':r>0?'Partially Paid':'Outstanding'};
-// Income and expenses only; transfers are never counted as income, expenses or spending.
-function computePeriod(txs,start,end){
-  const m=txs.filter(t=>t.date>=start&&t.date<=end);
-  const inc=m.filter(t=>t.type==='income'), exp=m.filter(t=>t.type==='expense');
+  const tEl=$('#totalAmt'); tEl.textContent=money(total); tEl.classList.toggle('neg',total<0);
+
+  // month
+  $('#monthLbl').textContent=new Date(viewY,viewM,1).toLocaleDateString('en-AU',{month:'long',year:'numeric'});
+  const mk=monthKey(); const mtx=txs.filter(t=>(t.date||'').startsWith(mk));
+  const inc=mtx.filter(t=>t.type==='income'), exp=mtx.filter(t=>t.type==='expense');
   const sum=a=>a.reduce((s,t)=>s+t.amount,0);
-  const income=sum(inc), expenses=sum(exp);
-  // who earned the income (Raman / Robin / Other); expenses come from the one pool
-  const byEarner={}; inc.forEach(t=>{const k=earnerOf(t);byEarner[k]=(byEarner[k]||0)+t.amount});
-  const byCat={}; exp.forEach(t=>{const k=t.category?catKey(t.category):'Uncategorised';byCat[k]=(byCat[k]||0)+t.amount});
-  const cats=Object.entries(byCat).map(([category,amount])=>({category,amount})).sort((a,b)=>b.amount-a.amount);
-  return {m,inc,exp,income,expenses,byEarner,net:income-expenses,cats};
-}
-window.__ledger={computeBalances,computePeriod,get cfg(){return cfg},get txs(){return txs},get loans(){return loans}};
-
-function render(){
-  const B=computeBalances(cfg,txs,loans);
-  renderDue(B);
-  const tEl=$('#totalAmt'); tEl.textContent=money(B.total); tEl.classList.toggle('neg',B.total<0);
-  const od=new Date((cfg.openingDate||OPENING_DATE)+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});
-  $('#totalNote').textContent='Opening balance '+money(B.opening)+' on '+od+', plus income, minus expenses. Transfers between accounts don’t change it.';
-  $('#openingNote').textContent='Opening balances as of '+od+'. They are not income.';
-
-  const R=range(); const wk=period==='week';
-  $('#monthLbl').textContent=wk?R.startD.toLocaleDateString('en-AU',{day:'numeric',month:'short'})+' – '+R.endD.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})
-    :new Date(viewY,viewM,1).toLocaleDateString('en-AU',{month:'long',year:'numeric'});
-  $('#peopleH').textContent='Income by person, this '+(wk?'week':'month');
-  const M=computePeriod(txs,R.start,R.end);
-  $('#sIncome').textContent=money(M.income); $('#sIncomeN').textContent=M.inc.length+(M.inc.length===1?' entry':' entries');
-  $('#sExpense').textContent=money(M.expenses); $('#sExpenseN').textContent=M.exp.length+(M.exp.length===1?' entry':' entries');
-  const nEl=$('#sNet'); nEl.textContent=(M.net>0?'+':'')+money(M.net); nEl.className='v num '+(M.net>0?'pos':M.net<0?'neg':'');
-  // previous-month comparison (month view, only when last month has data)
-  const PR=prevRange(); const P=computePeriod(txs,PR.start,PR.end); const showCmp=!wk&&P.m.some(t=>t.type!=='transfer');
-  [['#sIncomeC',P.income],['#sExpenseC',P.expenses],['#sNetC',P.net]].forEach(([id,v])=>{const e=$(id);e.hidden=!showCmp;e.textContent='Last month '+(id==='#sNetC'&&v>0?'+':'')+money(v)});
-  $('#sPctSpent').textContent=pct(M.expenses,M.income);
-  const r=$('#sPctRem'); r.textContent=pct(M.net,M.income); r.className='v num '+(M.income&&M.net<0?'neg':'');
-  if(M.cats.length){$('#sTop').textContent=M.cats[0].category;$('#sTopS').textContent=money(M.cats[0].amount)+' · '+pct(M.cats[0].amount,M.expenses)+' of spending'}else{$('#sTop').textContent='—';$('#sTopS').textContent='No expenses yet'}
-
-  // money flow
-  $('#fIncPct').textContent=M.income?'100%':'—'; $('#fSpPct').textContent=pct(M.expenses,M.income); $('#fRmPct').textContent=pct(M.net,M.income);
-  const sp=M.income?Math.min(100,M.expenses/M.income*100):(M.expenses?100:0);
-  $('#flowSp').style.width=sp+'%'; $('#flowRm').style.width=(M.income?Math.max(0,100-sp):0)+'%';
-
-  // categories
-  const cb=$('#catBody'), cf=$('#catFoot'); cb.replaceChildren(); cf.replaceChildren();
-  if(!M.cats.length){const tr=el('tr');const td=el('td','empty','No expenses this '+(wk?'week':'month')+' yet.');td.colSpan=4;tr.append(td);cb.append(tr)}
-  else{
-    M.cats.forEach(c=>{const tr=el('tr');tr.dataset.cat=c.category;const n=el('td');n.append(el('span',null,c.category));const bar=el('span','catbar');bar.style.width=(c.amount/M.expenses*100)+'%';n.append(bar);
-      tr.append(n,el('td','n',money(c.amount)),el('td','n',pct(c.amount,M.expenses)),el('td','n',pct(c.amount,M.income)));cb.append(tr)});
-    const tr=el('tr');tr.append(el('td',null,'Total'),el('td','n',money(M.expenses)),el('td','n',pct(M.expenses,M.expenses)),el('td','n',pct(M.expenses,M.income)));cf.append(tr);
-  }
+  const si=sum(inc), se=sum(exp), sh=sum(exp.filter(t=>t.shared));
+  $('#sIncome').textContent=money(si); $('#sIncomeN').textContent=inc.length+(inc.length===1?' entry':' entries');
+  $('#sExpense').textContent=money(se); $('#sExpenseN').textContent=exp.length+(exp.length===1?' entry':' entries');
+  const net=si-se, nEl=$('#sNet'); nEl.textContent=(net>0?'+':'')+money(net); nEl.className='v num '+(net>0?'pos':net<0?'neg':'');
+  $('#sShared').textContent=money(sh); $('#sSharedS').textContent=(se?Math.round(sh/se*100):0)+'% of expenses';
 
   // accounts
   const al=$('#acctList'); al.replaceChildren();
-  const ids=[...cfg.accounts.map(a=>a.id)]; Object.keys(B.acct).forEach(id=>{if(!ids.includes(id))ids.push(id)});
+  const ids=new Set(cfg.accounts.map(a=>a.id)); Object.keys(acct).forEach(id=>ids.add(id));
   let asum=0;
-  ids.forEach(id=>{const a=cfg.accounts.find(x=>x.id===id);const row=el('div','kv acct-row');row.dataset.acct=nameOf(cfg.accounts,id);
-    const k=el('span','k');k.append(el('span',null,nameOf(cfg.accounts,id)));k.append(el('small',null,'Opening '+money(a?a.opening||0:0)));
-    row.append(k,el('span','num'+(B.acct[id]<0?' neg':''),money(B.acct[id]||0)));al.append(row);asum+=B.acct[id]||0});
+  ids.forEach(id=>{const r=el('div','kv');r.append(el('span','k',nameOf(cfg.accounts,id)));const v=el('span','num'+(acct[id]<0?' neg':''),money(acct[id]||0));r.append(v);al.append(r);asum+=acct[id]||0});
   $('#acctSum').textContent=money(asum);
-  const ck=$('#acctCheck'); if(asum===B.total){ck.className='check-ok';ck.textContent='Matches Total Money.'}else{ck.className='check-bad';ck.textContent='Balance difference detected: '+money(Math.abs(asum-B.total))}
 
   // paid by
   const pl=$('#paidList'); pl.replaceChildren();
-  {
-    const sum=a=>a.reduce((s,t)=>s+t.amount,0);
-    const kv=(label,sub,val,attr)=>{const row=el('div','kv');if(attr)row.dataset.row=attr;const k=el('span','k');k.append(el('div',null,label));if(sub)k.append(el('div','status',sub));row.append(k,el('span','num',money(val)));pl.append(row)};
-    const ids=[...cfg.people.map(p=>p.id)]; Object.keys(M.byEarner).forEach(k=>{if(k!=='other'&&!ids.includes(k))ids.push(k)}); ids.push('other');
-    ids.forEach(id=>{const v=M.byEarner[id]||0;kv(earnerName(id)+' Income',M.income?pct(v,M.income)+' of income':null,v,'inc-'+earnerName(id))});
-    const tot=el('div','kv');tot.dataset.row='inc-total';const tk=el('span','k');tk.append(el('strong',null,'Total Income'));tot.append(tk,el('strong','num',money(M.income)));pl.append(tot);
-    pl.append(el('div','status','All income goes into Total Money. There are no separate balances per person.'));
+  if(!exp.length){pl.append(el('div','empty','No expenses this month yet.'))}
+  else{
+    const pids=new Set(cfg.people.map(p=>p.id)); exp.forEach(t=>pids.add(t.paidBy));
+    pids.forEach(pid=>{
+      const all=exp.filter(t=>t.paidBy===pid); const shared=sum(all.filter(t=>t.shared));
+      const r=el('div','kv'); const k=el('span','k'); k.append(el('div',null,nameOf(cfg.people,pid)));
+      k.append(el('div','status',money(shared)+' of it shared'));
+      r.append(k, el('span','num',money(sum(all)))); pl.append(r);
+    });
   }
 
   // list
   const list=$('#txList'); list.replaceChildren();
-  let rows=M.m.slice();
-  if(filter!=='all') rows=rows.filter(t=>t.type===filter);
+  let rows=mtx.slice();
+  if(filter==='shared') rows=rows.filter(t=>t.type==='expense'&&t.shared);
+  else if(filter!=='all') rows=rows.filter(t=>t.type===filter);
   rows.sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||0)-(a.createdAt||0));
-  if(!rows.length){list.append(el('div','empty', txs.length?'Nothing here for this '+(wk?'week':'month')+'.':'No transactions yet. Add your first one with quick entry or the form.'));return}
+  if(!rows.length){list.append(el('div','empty', txs.length?'Nothing here for this month.':'No transactions yet. Add your first one with the form.'));return}
   for(const t of rows){
-    const row=el('div','tx'+(t.id===editingId?' edit-row':'')); row.dataset.id=t.id; row.append(el('span','bar '+t.type));
-    const mid=el('div'); mid.append(el('div','d',t.description||(t.category||(t.type[0].toUpperCase()+t.type.slice(1)))));
+    const r=el('div','tx'); r.append(el('span','bar '+t.type));
+    const mid=el('div'); mid.append(el('div','d',t.description||(t.type[0].toUpperCase()+t.type.slice(1))));
     const meta=el('div','meta');
     const d=new Date(t.date+'T00:00:00'); meta.append(el('span',null,isNaN(d)?t.date:d.toLocaleDateString('en-AU',{day:'numeric',month:'short'})));
     if(t.type==='transfer') meta.append(el('span',null,nameOf(cfg.accounts,t.account)+' → '+nameOf(cfg.accounts,t.toAccount)));
     else meta.append(el('span',null,nameOf(cfg.accounts,t.account)));
-    if(t.type==='income') meta.append(el('span',null,'Earned by '+earnerName(earnerOf(t))));
-    if(t.category) meta.append(el('span',null,catKey(t.category)));
-    mid.append(meta); if(t.notes) mid.append(el('div','note',t.notes)); row.append(mid);
+    if(t.type==='expense') meta.append(el('span',null,'Paid by '+nameOf(cfg.people,t.paidBy)));
+    if(t.type==='income'&&t.receivedBy) meta.append(el('span',null,'Received by '+nameOf(cfg.people,t.receivedBy)));
+    if(t.category) meta.append(el('span',null,t.category));
+    if(t.type==='expense'&&t.shared) meta.append(el('span','tag','Shared'));
+    mid.append(meta); r.append(mid);
     const right=el('div','r');
     const sign=t.type==='income'?'+':t.type==='expense'?'−':'';
     right.append(el('span','a num '+(t.type==='income'?'pos':t.type==='expense'?'neg':'transfer'),sign+money(t.amount)));
     if(db&&canWrite){
-      const btns=el('div','btns');
-      const e=el('button','del edit','Edit'); e.type='button'; e.addEventListener('click',()=>startEdit(t));
       const b=el('button','del','Delete'); b.type='button';
       b.addEventListener('click',async()=>{
         if(!b.classList.contains('confirm')){b.classList.add('confirm');b.textContent='Confirm delete';setTimeout(()=>{b.classList.remove('confirm');b.textContent='Delete'},4000);return}
-        b.disabled=true; try{await db.collection('transactions').doc(t.id).delete(); if(editingId===t.id)stopEdit()}catch(err){b.disabled=false;setStatus('Could not delete. Try again.')}
+        b.disabled=true; try{await db.collection('transactions').doc(t.id).delete()}catch(e){b.disabled=false;setStatus('Could not delete. Try again.')}
       });
-      btns.append(e,b); right.append(btns);
+      right.append(b);
     }
-    row.append(right); list.append(row);
+    r.append(right); list.append(r);
   }
 }
 
 function fillSelects(){
-  const opts=(sel,list,ph)=>{const cur=sel.value;sel.replaceChildren();const p=el('option',null,ph);p.value='';sel.append(p);list.forEach(i=>{const o=el('option',null,i.name);o.value=i.id;sel.append(o)});sel.value=list.some(i=>i.id===cur)?cur:''};
-  opts($('#fAccount'),cfg.accounts,'Choose…'); opts($('#fTo'),cfg.accounts,'Choose…');
-  opts($('#fEarnedBy'),[...cfg.people,{id:'other',name:'Other'}],'Choose…');
-  const cats=[...cfg.categories]; txs.forEach(t=>{if(t.category&&!cats.some(c=>norm(c)===norm(t.category)))cats.push(t.category)});
-  const dl=$('#catList'); dl.replaceChildren(); cats.forEach(c=>{const o=el('option');o.value=c;dl.append(o)});
+  const opts=(sel,list)=>{const cur=sel.value;sel.replaceChildren();list.forEach(i=>{const o=el('option',null,i.name);o.value=i.id;sel.append(o)});if(list.some(i=>i.id===cur))sel.value=cur};
+  opts($('#fAccount'),cfg.accounts); opts($('#fTo'),cfg.accounts); opts($('#fPaidBy'),cfg.people); opts($('#fReceivedBy'),cfg.people);
+  if(type==='transfer'&&$('#fTo').value===$('#fAccount').value&&cfg.accounts[1]) $('#fTo').value=cfg.accounts.find(a=>a.id!==$('#fAccount').value).id;
+  const cats=new Set(txs.map(t=>t.category).filter(Boolean)); const dl=$('#catList'); dl.replaceChildren(); cats.forEach(c=>{const o=el('option');o.value=c;dl.append(o)});
 }
 function setType(t){
-  type=t; document.querySelectorAll('.seg[aria-label="Type"] button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===t)));
+  type=t; document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===t)));
   document.querySelectorAll('[data-for]').forEach(n=>n.hidden=!n.dataset.for.split(' ').includes(t));
-  $('#fAccountLbl').textContent=t==='income'?'Received into account':t==='expense'?'Paid from account':'From account';
-  $('#fDescLbl').textContent=t==='income'?'Source':'Description'; $('#fDesc').placeholder=t==='income'?'YOMG, Robin\u2019s work…':t==='transfer'?'Optional':'Uber to uni, weekly shop…';
-  $('#fSubmit').textContent=editingId?'Save changes':'Add '+t; clearNeed();
+  $('#fAccountLbl').textContent=t==='transfer'?'From account':t==='income'?'Into account':'From account';
+  $('#fSubmit').textContent='Add '+t; fillSelects();
 }
-document.querySelectorAll('.seg[aria-label="Type"] button').forEach(b=>b.addEventListener('click',()=>setType(b.dataset.type)));
-document.querySelectorAll('.seg.period button').forEach(b=>b.addEventListener('click',()=>{
-  const p=b.dataset.period; if(p===period)return;
-  if(p==='week'){const t=new Date();weekStart=(t.getFullYear()===viewY&&t.getMonth()===viewM)?mondayOf(t):mondayOf(new Date(viewY,viewM,1))}
-  else{const th=new Date(weekStart);th.setDate(th.getDate()+3);viewY=th.getFullYear();viewM=th.getMonth()}
-  period=p; document.querySelectorAll('.seg.period button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); render();
-}));
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>setType(b.dataset.type)));
 document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.f;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));render()}));
-$('#prevM').addEventListener('click',()=>{if(period==='week'){weekStart.setDate(weekStart.getDate()-7)}else{viewM--;if(viewM<0){viewM=11;viewY--}}render()});
-$('#nextM').addEventListener('click',()=>{if(period==='week'){weekStart.setDate(weekStart.getDate()+7)}else{viewM++;if(viewM>11){viewM=0;viewY++}}render()});
+$('#prevM').addEventListener('click',()=>{viewM--;if(viewM<0){viewM=11;viewY--}render()});
+$('#nextM').addEventListener('click',()=>{viewM++;if(viewM>11){viewM=0;viewY++}render()});
 
 function parseAmount(s){s=String(s).replace(/[$,\s]/g,'');if(!/^\d+(\.\d{0,2})?$/.test(s))return null;const c=Math.round(parseFloat(s)*100);return c>0?c:null}
 const fMsg=$('#fMsg'); const say=(m,err)=>{fMsg.textContent=m;fMsg.className='msg'+(err?' err':'')};
-function clearNeed(){document.querySelectorAll('.field.need').forEach(f=>f.classList.remove('need'))}
-function need(id){const f=$('#'+id).closest('.field');if(f)f.classList.add('need')}
-
-function resetForm(){$('#fAmount').value='';$('#fDesc').value='';$('#fCat').value='';$('#fNotes').value='';$('#fAccount').value='';$('#fTo').value='';$('#fEarnedBy').value=''}
-function startEdit(t){
-  editingId=t.id; setType(t.type);
-  $('#fAmount').value=(t.amount/100).toFixed(2); $('#fDate').value=t.date; $('#fDesc').value=t.description||''; $('#fCat').value=t.category||'';
-  $('#fAccount').value=t.account||''; $('#fTo').value=t.toAccount||''; $('#fEarnedBy').value=t.type==='income'?(t.earnedBy||t.receivedBy||''):''; $('#fNotes').value=t.notes||'';
-  $('#addH').textContent='Edit transaction'; $('#fSubmit').textContent='Save changes'; $('#fCancel').hidden=false; say('Editing. Change any field, then press Save changes.');
-  render(); $('#txForm').scrollIntoView({behavior:'smooth',block:'nearest'}); $('#fAmount').focus();
-}
-function stopEdit(){editingId=null;$('#addH').textContent='Add a transaction';$('#fCancel').hidden=true;resetForm();$('#fDate').value=today();setType(type);render()}
-$('#fCancel').addEventListener('click',()=>{stopEdit();say('')});
-
-async function ensureCategory(c){
-  if(!c||cfg.categories.some(x=>norm(x)===norm(c))) return;
-  const cats=[...cfg.categories,c];
-  try{await db.doc('config/main').set({...clone(cfg),categories:cats})}catch(e){}
-}
-
-async function submitForm(){
-  if(!db){say('Saving isn’t available in this view.',true);return false}
-  clearNeed();
-  const amount=parseAmount($('#fAmount').value); if(!amount){need('fAmount');say('Enter an amount above zero, like 42.50.',true);return false}
-  const date=$('#fDate').value; if(!date){need('fDate');say('Pick a date.',true);return false}
-  const t={type,amount,date,description:$('#fDesc').value.trim().slice(0,120),account:$('#fAccount').value,notes:$('#fNotes').value.trim().slice(0,300)};
-  const missing=[];
-  if(!t.account) {need('fAccount');missing.push(type==='income'?'which account it went into':'which account it came from')}
-  if(type==='expense'){const c=$('#fCat').value.trim().slice(0,40);t.category=c?catKey(c):''}
-  if(type==='income'){t.earnedBy=$('#fEarnedBy').value;if(!t.earnedBy){need('fEarnedBy');missing.push('who earned it')}}
-  if(type==='transfer'){t.toAccount=$('#fTo').value;if(!t.toAccount){need('fTo');missing.push('the destination account')}}
-  if(missing.length){say('Choose '+missing.join(' and ')+', then press '+(editingId?'Save changes':'Add')+'.',true);return false}
-  if(type==='transfer'&&t.toAccount===t.account){need('fTo');say('Choose two different accounts.',true);return false}
+$('#txForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!db){say('Saving isn\'t available in this view.',true);return}
+  const amount=parseAmount($('#fAmount').value); if(!amount){say('Enter an amount above zero, like 42.50.',true);return}
+  const date=$('#fDate').value; if(!date){say('Pick a date.',true);return}
+  const t={type,amount,date,description:$('#fDesc').value.trim().slice(0,120),account:$('#fAccount').value,createdAt:Date.now()};
+  if(type!=='transfer') t.category=$('#fCat').value.trim().slice(0,40);
+  if(type==='expense'){t.paidBy=$('#fPaidBy').value;t.shared=$('#fShared').checked}
+  if(type==='income') t.receivedBy=$('#fReceivedBy').value;
+  if(type==='transfer'){t.toAccount=$('#fTo').value;if(t.toAccount===t.account){say('Choose two different accounts.',true);return}}
   $('#fSubmit').disabled=true;
-  try{
-    if(editingId){
-      const orig=txs.find(x=>x.id===editingId)||{};
-      t.createdAt=orig.createdAt||Date.now(); t.updatedAt=Date.now();
-      await db.collection('transactions').doc(editingId).set(t);
-      say('Saved changes to '+(t.description||t.type)+'.'); editingId=null; $('#addH').textContent='Add a transaction'; $('#fCancel').hidden=true;
-    }else{
-      t.createdAt=Date.now();
-      await db.collection('transactions').add(t);
-      say('Added '+t.type+' of '+money(amount)+'.');
-    }
-    if(t.category) ensureCategory(t.category);
-    resetForm(); setType(type);
-    goToDate(date); render();
-    return true;
-  }catch(err){say(err&&err.code==='invalid_argument'?'You can view this ledger but not change it.':'Could not save. Try again.',true);return false}
+  try{await db.collection('transactions').add(t);say('Added '+type+' of '+money(amount)+'.');$('#fAmount').value='';$('#fDesc').value='';$('#fCat').value='';$('#fShared').checked=false;
+    const [y,m]=date.split('-').map(Number); viewY=y; viewM=m-1; render();
+  }catch(err){say(err&&err.code==='invalid_argument'?'You can view this ledger but not add to it.':'Could not save. Try again.',true)}
   finally{$('#fSubmit').disabled=false}
-}
-$('#txForm').addEventListener('submit',e=>{e.preventDefault();submitForm()});
+});
 
-// ---- quick entry ----
-function findAccount(words){
-  // exact name match on one or two words, e.g. "cash", "bank1", "bank 2"
-  const accs=cfg.accounts.map(a=>({a,n:norm(a.name)}));
-  for(let i=0;i<words.length;i++){
-    const two=i+1<words.length?norm(words[i]+words[i+1]):null;
-    if(two){const h=accs.find(x=>x.n===two);if(h)return {id:h.a.id,start:i,len:2}}
-    const one=norm(words[i]); const h=accs.find(x=>x.n===one); if(h)return {id:h.a.id,start:i,len:1};
-  }
-  return null;
-}
-function matchAccountPhrase(s){const n=norm(s);const h=cfg.accounts.find(a=>norm(a.name)===n);return h?h.id:''}
-function findPerson(words){
-  for(let i=0;i<words.length;i++){const n=norm(words[i]);
-    const h=cfg.people.find(p=>norm(p.name)===n||norm(p.name)===n.replace(/s$/,''));if(h)return {id:h.id,start:i};}
-  return null;
-}
-function parseQuick(text){
-  const s=text.trim().replace(/\s+/g,' ');
-  let m=s.match(/^transfer\s+\$?([\d,]+(?:\.\d{1,2})?)\s+(?:from\s+)?(.+?)\s+to\s+(.+)$/i);
-  if(m) return {type:'transfer',amount:parseAmount(m[1]),account:matchAccountPhrase(m[2]),toAccount:matchAccountPhrase(m[3]),description:'Transfer'};
-  m=s.match(/^([+\-−])\s*\$?([\d,]+(?:\.\d{1,2})?)(?:\s+(.*))?$/);
-  if(!m) return null;
-  const t={type:m[1]==='+'?'income':'expense',amount:parseAmount(m[2])};
-  let words=(m[3]||'').split(' ').filter(Boolean);
-  const acc=findAccount(words); if(acc){t.account=acc.id;words.splice(acc.start,acc.len)}
-  if(t.type==='income'){const per=findPerson(words); if(per) t.earnedBy=per.id;}
-  const cat=words.map(w=>cfg.categories.find(c=>norm(c)===norm(w))).find(Boolean);
-  t.category=cat||'';
-  t.description=words.join(' ')||cat||'';
-  return t;
-}
-window.__ledger.parseQuick=parseQuick;
-async function quickGo(){
-  const q=$('#qInput'); const t=parseQuick(q.value);
-  if(!t||!t.amount){say('Start with + for income, − for expense, or “transfer 200 bank1 to cash”.',true);return}
-  if(editingId) stopEdit();
-  setType(t.type); resetForm(); $('#fDate').value=today();
-  $('#fAmount').value=(t.amount/100).toFixed(2); $('#fDesc').value=t.description||''; $('#fCat').value=t.category||'';
-  $('#fAccount').value=t.account||''; $('#fTo').value=t.toAccount||''; $('#fEarnedBy').value=t.earnedBy||'';
-  const ok=await submitForm();
-  if(ok) q.value=''; else { const f=document.querySelector('.field.need select, .field.need input'); if(f) f.focus(); }
-}
-$('#qGo').addEventListener('click',quickGo);
-$('#qInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();quickGo()}});
-
-// ---- settings ----
+// settings
 let draft=null;
 function renderSettings(){
-  if(!draft){draft=clone(cfg);draft.catOrig=cfg.categories.slice()}
+  draft=draft||JSON.parse(JSON.stringify(cfg));
   const pe=$('#peopleEdit'); pe.replaceChildren();
   draft.people.forEach((p,i)=>{const r=el('div','item');const inp=el('input');inp.id='person-'+p.id;inp.value=p.name;inp.setAttribute('aria-label','Person '+(i+1)+' name');inp.addEventListener('input',()=>p.name=inp.value);r.append(inp);pe.append(r)});
   const ae=$('#acctEdit'); ae.replaceChildren();
-  draft.accounts.forEach(a=>{const r=el('div','item');const inp=el('input');inp.id='acct-'+a.id;inp.value=a.name;inp.setAttribute('aria-label','Account name');inp.addEventListener('input',()=>a.name=inp.value);
-    const ob=el('input','ob num');ob.id='open-'+a.id;ob.inputMode='decimal';ob.value=((a.opening||0)/100).toFixed(2);ob.setAttribute('aria-label','Opening balance for '+a.name);ob.addEventListener('input',()=>{a._ob=ob.value});
-    r.append(inp,ob);
+  draft.accounts.forEach(a=>{const r=el('div','item');const inp=el('input');inp.id='acct-'+a.id;inp.value=a.name;inp.setAttribute('aria-label','Account name');inp.addEventListener('input',()=>a.name=inp.value);r.append(inp);
     const used=txs.some(t=>t.account===a.id||t.toAccount===a.id);
-    const b=el('button','ghost','Remove');b.type='button';b.disabled=used||draft.accounts.length<2||!!a.opening;b.title=used?'This account has transactions':a.opening?'Set its opening balance to 0 first':'';b.addEventListener('click',()=>{draft.accounts=draft.accounts.filter(x=>x!==a);renderSettings()});r.append(b);ae.append(r)});
-  const ce=$('#catEdit'); ce.replaceChildren();
-  draft.categories.forEach((c,i)=>{const r=el('div','item');const inp=el('input');inp.id='cat-'+i;inp.value=c;inp.setAttribute('aria-label','Category name');inp.addEventListener('input',()=>draft.categories[i]=inp.value);
-    const b=el('button','ghost','Remove');b.type='button';b.addEventListener('click',()=>{draft.categories.splice(i,1);draft.catOrig.splice(i,1);renderSettings()});r.append(inp,b);ce.append(r)});
+    const b=el('button','ghost','Remove');b.type='button';b.disabled=used||draft.accounts.length<2;b.title=used?'This account has transactions':'';b.addEventListener('click',()=>{draft.accounts=draft.accounts.filter(x=>x!==a);renderSettings()});r.append(b);ae.append(r)});
 }
-$('#addAcct').addEventListener('click',()=>{const n=$('#newAcct').value.trim();if(!n)return;draft.accounts.push({id:'a'+Date.now().toString(36),name:n.slice(0,40),opening:0});$('#newAcct').value='';renderSettings()});
-$('#addCat').addEventListener('click',()=>{const n=$('#newCat').value.trim();if(!n||draft.categories.some(c=>norm(c)===norm(n)))return;draft.categories.push(n.slice(0,40));draft.catOrig.push(null);$('#newCat').value='';renderSettings()});
+$('#addAcct').addEventListener('click',()=>{const n=$('#newAcct').value.trim();if(!n)return;draft.accounts.push({id:'a'+Date.now().toString(36),name:n.slice(0,40)});$('#newAcct').value='';renderSettings()});
 $('#saveCfg').addEventListener('click',async()=>{
-  const m=$('#cfgMsg'); if(!db){m.textContent='Saving isn’t available in this view.';return}
-  for(const a of draft.accounts){if(a._ob!=null){const v=String(a._ob).replace(/[$,\s]/g,'');if(v===''||!/^-?\d+(\.\d{0,2})?$/.test(v)){m.textContent='Opening balance for '+a.name+' must be a number like 1225.00.';return}a.opening=Math.round(parseFloat(v)*100)}delete a._ob}
+  const m=$('#cfgMsg'); if(!db){m.textContent='Saving isn\'t available in this view.';return}
   draft.people.forEach(p=>p.name=p.name.trim().slice(0,40)||'Person'); draft.accounts.forEach(a=>a.name=a.name.trim().slice(0,40)||'Account');
-  // renamed categories carry over to the transactions that use them
-  const renames=[]; const cats=[];
-  draft.categories.forEach((c,i)=>{const n=c.trim().slice(0,40);if(!n)return;cats.push(n);const o=draft.catOrig[i];if(o&&norm(o)!==norm(n))renames.push([o,n])});
-  try{
-    await db.doc('config/main').set({people:draft.people,accounts:draft.accounts,categories:cats,openingDate:cfg.openingDate||OPENING_DATE});
-    let moved=0;
-    for(const [o,n] of renames){for(const t of txs.filter(t=>t.type==='expense'&&norm(t.category)===norm(o))){const {id,...body}=t;await db.collection('transactions').doc(id).set({...body,category:n});moved++}}
-    m.textContent='Saved.'+(moved?' Renamed the category on '+moved+' transaction'+(moved===1?'':'s')+'.':'');
-  }catch(e){m.textContent='Could not save. Try again.'}
+  try{await db.doc('config/main').set({people:draft.people,accounts:draft.accounts});m.textContent='Saved.'}catch(e){m.textContent='Could not save. Try again.'}
 });
 
 function setStatus(s){$('#status').textContent=s}
+setType('expense'); renderSettings(); render();
 
-// ---- Outstanding Due ----
-let loanEditing=null, repayOpen=null, repayDraft={};
-function fmtDate(iso){const d=new Date(iso+'T00:00:00');return isNaN(d)?iso:d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
-function acctOpts(sel,ph){const cur=sel.value;sel.replaceChildren();const p=el('option',null,ph);p.value='';sel.append(p);cfg.accounts.forEach(a=>{const o=el('option',null,a.name);o.value=a.id;sel.append(o)});sel.value=cfg.accounts.some(a=>a.id===cur)?cur:''}
-function renderDue(B){
-  $('#dTotal').textContent=money(B.total); $('#dDue').textContent=money(B.due); $('#dBoth').textContent=money(B.total+B.due);
-  $('#dueNote').textContent=B.due?'Outstanding Due '+money(B.due)+' · Total Money + Outstanding Due '+money(B.total+B.due):'';
-  if(!$('#loanForm').hidden) acctOpts($('#lAccount'),'Choose…');
-  const list=$('#loanList'); list.replaceChildren();
-  if(!loans.length){list.append(el('div','empty',loansLoaded||!db?'Nobody owes us anything. Use “Lend money” when you lend to someone.':'Loading…'));return}
-  const rank={'Outstanding':0,'Partially Paid':1,'Paid':2};
-  const rows=loans.slice().sort((a,b)=>rank[statusOf(a)]-rank[statusOf(b)]||(b.date||'').localeCompare(a.date||''));
-  const t=today();
-  for(const l of rows){
-    const st=statusOf(l), repaid=repaidOf(l), out=Math.max(0,l.amount-repaid);
-    const card=el('div','loan'+(st==='Paid'?' paid':'')); card.dataset.loan=l.name;
-    const top=el('div','loan-top'); const who=el('div','who'); who.append(el('span',null,l.name));
-    who.append(el('span','pill '+(st==='Paid'?'paid':st==='Outstanding'?'out':'part'),st)); top.append(who);
-    top.append(el('span','num','Outstanding '+money(out))); card.append(top);
-    const nums=el('div','loan-nums num');
-    const add=(lbl,val,cls)=>{const sp=el('span',cls||null,lbl+' ');sp.append(el('b',null,val));nums.append(sp)};
-    add('Lent',money(l.amount)); add('on',fmtDate(l.date)); add('from',nameOf(cfg.accounts,l.account)); add('Repaid',money(repaid));
-    if(l.dueDate){const od=st!=='Paid'&&l.dueDate<t;add(od?'Overdue since':'Due',fmtDate(l.dueDate),od?'overdue':null)}
-    card.append(nums);
-    if(l.notes) card.append(el('div','note',l.notes));
-    if(l.repayments.length){
-      const reps=el('div','reps');
-      l.repayments.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach(r=>{
-        const row=el('div','rep'); const txt=el('div'); txt.append(el('strong','num',money(r.amount)+' repaid'));
-        txt.append(el('span',null,' '+fmtDate(r.date)+' into '+nameOf(cfg.accounts,r.account)+(r.notes?' · '+r.notes:'')));
-        row.append(txt);
-        if(db&&canWrite){const b=el('button','del','Remove');b.type='button';b.addEventListener('click',async()=>{
-          if(!b.classList.contains('confirm')){b.classList.add('confirm');b.textContent='Confirm remove';setTimeout(()=>{b.classList.remove('confirm');b.textContent='Remove'},4000);return}
-          b.disabled=true; await saveLoan(l.id,{...stripLoan(l),repayments:l.repayments.filter(x=>x!==r)});
-        });row.append(b)}
-        reps.append(row);
-      });
-      card.append(reps);
-    }
-    if(db&&canWrite){
-      const acts=el('div','dueactions');
-      if(st!=='Paid'){const rb=el('button',null,'Record repayment');rb.type='button';rb.addEventListener('click',()=>{repayOpen=repayOpen===l.id?null:l.id;repayDraft={};render()});acts.append(rb)}
-      const eb=el('button','del','Edit');eb.type='button';eb.addEventListener('click',()=>openLoanForm(l));
-      const db2=el('button','del','Delete');db2.type='button';db2.addEventListener('click',async()=>{
-        if(!db2.classList.contains('confirm')){db2.classList.add('confirm');db2.textContent=l.repayments.length?'Confirm delete (and its repayments)':'Confirm delete';setTimeout(()=>{db2.classList.remove('confirm');db2.textContent='Delete'},4000);return}
-        db2.disabled=true; try{await db.collection('loans').doc(l.id).delete()}catch(e){db2.disabled=false;setStatus('Could not delete. Try again.')}
-      });
-      acts.append(eb,db2); card.append(acts);
-      if(repayOpen===l.id) card.append(repayForm(l,out));
-    }
-    list.append(card);
+// Local browser storage database. This version runs directly on GitHub Pages and does not require Claude or Firebase.
+const STORAGE_TX='moneyLedger.transactions.v1';
+const STORAGE_CFG='moneyLedger.config.v1';
+const listeners={transactions:new Set(),config:new Set()};
+const safeParse=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch(e){return fallback}};
+const write=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+const emit=(kind)=>{const snap=kind==='transactions'?{docs:safeParse(STORAGE_TX,[]).map(d=>({id:d.id,data:()=>({...d})}))}:{exists:!!localStorage.getItem(STORAGE_CFG),data:()=>safeParse(STORAGE_CFG,{})};listeners[kind].forEach(fn=>fn(snap));};
+const localDb={
+  doc(path){
+    if(path!=='config/main') throw new Error('Unsupported document');
+    return {
+      set(data){write(STORAGE_CFG,data);emit('config');return Promise.resolve()},
+      onSnapshot(fn,err){listeners.config.add(fn);try{fn({exists:!!localStorage.getItem(STORAGE_CFG),data:()=>safeParse(STORAGE_CFG,{})})}catch(e){if(err)err(e)}return()=>listeners.config.delete(fn)}
+    };
+  },
+  collection(name){
+    if(name!=='transactions') throw new Error('Unsupported collection');
+    return {
+      add(data){const rows=safeParse(STORAGE_TX,[]);const id='tx_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);rows.push({id,...data});write(STORAGE_TX,rows);emit('transactions');return Promise.resolve({id})},
+      doc(id){return {delete(){const rows=safeParse(STORAGE_TX,[]).filter(x=>x.id!==id);write(STORAGE_TX,rows);emit('transactions');return Promise.resolve()}}},
+      onSnapshot(fn,err){listeners.transactions.add(fn);try{fn({docs:safeParse(STORAGE_TX,[]).map(d=>({id:d.id,data:()=>({...d})}))})}catch(e){if(err)err(e)}return()=>listeners.transactions.delete(fn)}
+    };
   }
-}
-const stripLoan=l=>{const {id,...b}=l;return b};
-async function saveLoan(id,body){try{await db.collection('loans').doc(id).set(body);return true}catch(e){setStatus(e&&e.code==='invalid_argument'?'You can view this ledger but not change it.':'Could not save. Try again.');return false}}
-function repayForm(l,out){
-  const f=el('form','subform'); f.noValidate=true; f.dataset.repay=l.name;
-  f.append(el('strong',null,'Record repayment from '+l.name));
-  const row=el('div','row');
-  const mk=(id,label,input)=>{const d=el('div','field');const lb=el('label',null,label);lb.htmlFor=id;input.id=id;d.append(lb,input);row.append(d);return input};
-  const amt=mk('rAmount','Amount',el('input')); amt.inputMode='decimal'; amt.value=(out/100).toFixed(2);
-  const dt=mk('rDate','Date',el('input')); dt.type='date'; dt.value=today();
-  const ac=mk('rAccount','Received into account',el('select')); acctOpts(ac,'Choose…');
-  const nt=mk('rNotes','Notes',el('input')); nt.placeholder='Optional';
-  if(repayDraft.amount!=null){amt.value=repayDraft.amount;dt.value=repayDraft.date;ac.value=repayDraft.account;nt.value=repayDraft.notes}
-  const keep=()=>{repayDraft={amount:amt.value,date:dt.value,account:ac.value,notes:nt.value}};
-  [amt,dt,ac,nt].forEach(i=>{i.addEventListener('input',keep);i.addEventListener('change',keep)});
-  f.append(row);
-  const acts=el('div','dueactions'); const sb=el('button','primary','Save repayment'); sb.type='submit'; const cb=el('button','ghost','Cancel'); cb.type='button';
-  cb.addEventListener('click',()=>{repayOpen=null;repayDraft={};render()}); acts.append(sb,cb); f.append(acts);
-  const msg=el('div','msg'); f.append(msg);
-  f.addEventListener('submit',async e=>{e.preventDefault();
-    const a=parseAmount(amt.value); const err=m=>{msg.textContent=m;msg.className='msg err'};
-    if(!a) return err('Enter an amount above zero.');
-    if(a>out) return err('That is more than the '+money(out)+' still owed.');
-    if(!dt.value) return err('Pick a date.');
-    if(!ac.value) return err('Choose which account the repayment went into.');
-    sb.disabled=true;
-    const r={id:'r'+Date.now().toString(36),amount:a,date:dt.value,account:ac.value,notes:nt.value.trim().slice(0,200)};
-    if(await saveLoan(l.id,{...stripLoan(l),repayments:[...l.repayments,r]})){repayOpen=null;repayDraft={};render()} else sb.disabled=false;
-  });
-  return f;
-}
-function openLoanForm(l){
-  loanEditing=l?l.id:null; const f=$('#loanForm'); f.hidden=false; acctOpts($('#lAccount'),'Choose…');
-  $('#loanFormH').textContent=l?'Edit loan to '+l.name:'Lend money'; $('#lSubmit').textContent=l?'Save changes':'Save loan';
-  $('#lName').value=l?l.name:''; $('#lAmount').value=l?(l.amount/100).toFixed(2):''; $('#lDate').value=l?l.date:today();
-  $('#lAccount').value=l?l.account:''; $('#lDue').value=l&&l.dueDate||''; $('#lNotes').value=l&&l.notes||''; $('#lMsg').textContent='';
-  f.scrollIntoView({behavior:'smooth',block:'nearest'}); $('#lName').focus();
-}
-$('#lendBtn').addEventListener('click',()=>openLoanForm(null));
-$('#lCancel').addEventListener('click',()=>{$('#loanForm').hidden=true;loanEditing=null});
-$('#loanForm').addEventListener('submit',async e=>{
-  e.preventDefault(); const m=$('#lMsg'); const err=x=>{m.textContent=x;m.className='msg err'};
-  if(!db) return err('Saving isn’t available in this view.');
-  const name=$('#lName').value.trim().slice(0,60); if(!name) return err('Enter who you lent the money to.');
-  const amount=parseAmount($('#lAmount').value); if(!amount) return err('Enter an amount above zero, like 300.00.');
-  const date=$('#lDate').value; if(!date) return err('Pick the date it was lent.');
-  const account=$('#lAccount').value; if(!account) return err('Choose which account the money came from.');
-  const prev=loanEditing?loans.find(x=>x.id===loanEditing):null; const repayments=prev?prev.repayments:[];
-  const repaid=repayments.reduce((s,r)=>s+r.amount,0); if(amount<repaid) return err('Amount Lent can’t be less than the '+money(repaid)+' already repaid.');
-  const body={name,amount,date,account,dueDate:$('#lDue').value||'',notes:$('#lNotes').value.trim().slice(0,300),repayments,createdAt:prev?prev.createdAt||Date.now():Date.now()};
-  $('#lSubmit').disabled=true;
-  const ok=await saveLoan(loanEditing||db.collection('loans').doc().id,body);
-  $('#lSubmit').disabled=false;
-  if(ok){$('#loanForm').hidden=true;loanEditing=null}
-});
-fillSelects(); setType('expense'); renderSettings(); render();
+};
 
-(async()=>{
-  if(!window.claude||!window.claude.use){setStatus('Open this page on claude.ai to save transactions.');$('#txList').replaceChildren(el('div','empty','Saving needs the claude.ai viewer.'));return}
-  db=await window.claude.use('db');
-  if(!db){setStatus('Sign in to see and add transactions.');$('#txList').replaceChildren(el('div','empty','Sign in to see transactions.'));return}
-  try{const user=await window.claude.use('user'); const w=user?await user.can('data.write'):null; if(w===false){canWrite=false;$('#fSubmit').disabled=true;$('#qGo').disabled=true;$('#saveCfg').disabled=true;$('#lendBtn').disabled=true;setStatus('You can view this ledger but not change it.')}}catch(e){}
+// Restore saved data and subscribe to changes. Data stays in this browser/device.
+db=localDb;
+if(!localStorage.getItem(STORAGE_CFG)) write(STORAGE_CFG,JSON.parse(JSON.stringify(DEFAULT_CFG)));
+try{
   db.doc('config/main').onSnapshot(s=>{
-    if(s.exists){const d=s.data(); cfg={
-      people:(d.people&&d.people.length?d.people:DEFAULT_CFG.people).map(x=>({...x})),
-      accounts:(d.accounts&&d.accounts.length?d.accounts:DEFAULT_CFG.accounts).map(x=>({...x,opening:typeof x.opening==='number'?x.opening:0})),
-      categories:Array.isArray(d.categories)?d.categories.slice():DEFAULT_CATS.slice(),
-      openingDate:d.openingDate||OPENING_DATE}}
+    if(s.exists){const d=s.data(); cfg={people:(d.people&&d.people.length?d.people:DEFAULT_CFG.people).map(x=>({...x})),accounts:(d.accounts&&d.accounts.length?d.accounts:DEFAULT_CFG.accounts).map(x=>({...x}))}}
     draft=null; fillSelects(); renderSettings(); render();
-  },()=>setStatus('Lost connection to settings. Reload the page.'));
-  db.collection('loans').onSnapshot(s=>{
-    loans=s.docs.map(d=>({id:d.id,...d.data()})).filter(l=>typeof l.amount==='number'&&l.amount>0).map(l=>({...l,repayments:Array.isArray(l.repayments)?l.repayments.filter(r=>typeof r.amount==='number'&&r.amount>0):[]}));
-    loansLoaded=true; render();
-  },()=>setStatus('Lost connection to Outstanding Due. Reload the page.'));
+  },()=>setStatus('Could not load settings.'));
   db.collection('transactions').onSnapshot(s=>{
     txs=s.docs.map(d=>({id:d.id,...d.data()})).filter(t=>typeof t.amount==='number'&&t.amount>0);
     fillSelects(); if(!$('details').open){draft=null;renderSettings()} render();
-  },()=>setStatus('Lost connection to transactions. Reload the page.'));
-})();
+  },()=>setStatus('Could not load transactions.'));
+  setStatus('Saved in this browser.');
+}catch(e){setStatus('Could not start local storage.');console.error(e)}
+
+// Keep multiple open tabs in sync.
+window.addEventListener('storage',e=>{
+  if(e.key===STORAGE_TX) emit('transactions');
+  if(e.key===STORAGE_CFG) emit('config');
+});
 })();
 </script>
 

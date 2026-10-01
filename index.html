@@ -1,392 +1,232 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Our Money Ledger</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: one column ledger — Total Money header, month summary, accounts, then add form + transaction list side by side on wide screens */
-:root{
-  --bg:#EEF2EF; --surface:#FFFFFF; --ink:#16211C; --muted:#5E6E66; --line:#D6DFDA;
-  --accent:#0E6B5A; --accent-ink:#FFFFFF; --accent-soft:#DCEDE7;
-  --pos:#1D7A3E; --neg:#B23A2E; --xfer:#5B5FA8; --shared:#8A5A12; --shared-soft:#F6EAD3;
-  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body:"Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#101614; --surface:#18201D; --ink:#E5EDE9; --muted:#93A39B; --line:#2A3631;
-  --accent:#4FC3A6; --accent-ink:#0B1A15; --accent-soft:#1D3A32;
-  --pos:#6BCB8B; --neg:#F08A7E; --xfer:#A3A6EE; --shared:#E2B266; --shared-soft:#3A2F1C; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#101614; --surface:#18201D; --ink:#E5EDE9; --muted:#93A39B; --line:#2A3631;
-  --accent:#4FC3A6; --accent-ink:#0B1A15; --accent-soft:#1D3A32;
-  --pos:#6BCB8B; --neg:#F08A7E; --xfer:#A3A6EE; --shared:#E2B266; --shared-soft:#3A2F1C; color-scheme:dark}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:24px 48px}
-.wrap{max-width:1080px;margin:0 auto;display:grid;gap:20px}
-h1,h2{font-family:var(--display);margin:0;text-wrap:balance}
-h2{font-size:1.05rem;font-weight:700}
-.num{font-variant-numeric:tabular-nums}
-.label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
-.total .amt{font-family:var(--display);font-size:clamp(2.4rem,7vw,3.6rem);font-weight:700;line-height:1;margin-top:6px}
-.total .amt.neg{color:var(--neg)}
-.total p{margin:6px 0 0;color:var(--muted);font-size:.85rem}
-.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-select,input,button{font:inherit;color:inherit}
-input,select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0;width:100%}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-button{cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:8px 14px;font-weight:600}
-button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-button.ghost{background:transparent}
-button:disabled{opacity:.5;cursor:not-allowed}
-.month-nav{display:flex;align-items:center;gap:6px}
-.month-nav span{min-width:9.5em;text-align:center;font-weight:600}
-.month-nav button{padding:6px 10px}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.stat{background:var(--surface);padding:14px 16px;display:grid;gap:4px;min-width:0}
-.stat .v{font-size:1.35rem;font-weight:600}
-.stat .s{font-size:.8rem;color:var(--muted)}
-.pos{color:var(--pos)}.neg{color:var(--neg)}
-@media (max-width:720px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
-@media (max-width:720px){.row2{grid-template-columns:minmax(0,1fr)}}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
-.kv{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line)}
-.kv:last-child{border-bottom:0}
-.kv .k{min-width:0;overflow-wrap:anywhere}
-.main{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
-@media (max-width:860px){.main{grid-template-columns:minmax(0,1fr)}}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{border:0;border-radius:0;background:transparent;padding:8px 6px;font-weight:600;color:var(--muted)}
-.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink)}
-form{display:grid;gap:10px}
-.field{display:grid;gap:4px}
-.field label{font-size:.82rem;font-weight:600;color:var(--muted)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.check{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px}
-.check input{width:auto;margin-top:3px}
-.check small{display:block;color:var(--muted)}
-.msg{font-size:.85rem;min-height:1.2em}
-.msg.err{color:var(--neg)}
-.filters{display:flex;gap:6px;flex-wrap:wrap}
-.chip{padding:5px 12px;border-radius:999px;font-size:.85rem;font-weight:600;color:var(--muted)}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.list{display:grid}
-.tx{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
-.tx:last-child{border-bottom:0}
-.bar{align-self:stretch;border-radius:2px}
-.bar.income{background:var(--pos)}.bar.expense{background:var(--neg)}.bar.transfer{background:var(--xfer)}
-.tx .d{font-weight:600;overflow-wrap:anywhere}
-.tx .meta{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:2px}
-.tag{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:var(--shared-soft);color:var(--shared)}
-.tx .r{text-align:right;display:grid;gap:4px;justify-items:end}
-.tx .a{font-weight:600}
-.tx .a.transfer{color:var(--xfer)}
-.del{font-size:.75rem;padding:3px 8px;font-weight:500;color:var(--muted)}
-.del.confirm{color:var(--neg);border-color:var(--neg)}
-.empty{color:var(--muted);padding:24px 0;text-align:center}
-.status{font-size:.8rem;color:var(--muted)}
-.settings{display:grid;gap:12px}
-.settings .list-edit{display:grid;gap:6px}
-.settings .item{display:flex;gap:6px}
-.settings .item button{flex:none}
-details summary{cursor:pointer;font-weight:600}
-@media (prefers-reduced-motion:no-preference){button{transition:background .15s,color .15s}}
+:root{--bg:#eef2ef;--surface:#fff;--ink:#16211c;--muted:#5e6e66;--line:#d6dfda;--accent:#0e6b5a;--accent-soft:#dcede7;--pos:#1d7a3e;--neg:#b23a2e;--xfer:#5b5fa8;--shared:#8a5a12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Arial,sans-serif;padding:24px 16px 50px}
+.wrap{max-width:1100px;margin:auto;display:grid;gap:20px}.num{font-variant-numeric:tabular-nums}.label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:1px solid var(--line);padding-bottom:16px}.total .amt{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:700;line-height:1;margin-top:6px}.total p{color:var(--muted);font-size:.85rem}
+.top-actions,.month-nav,.filters,.dueactions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.month-nav span{min-width:10em;text-align:center;font-weight:700}
+button,input,select{font:inherit}button,input,select{border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:9px 11px}button{cursor:pointer;font-weight:600}button.primary{background:var(--accent);border-color:var(--accent);color:#fff}button.ghost{background:transparent}button:disabled{opacity:.5;cursor:not-allowed}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}.seg button{border:0;border-radius:0}.seg button[aria-pressed=true]{background:var(--accent-soft)}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}.stat{background:var(--surface);padding:14px;display:grid;gap:4px}.stat .v{font-size:1.25rem;font-weight:700}.stat .s{font-size:.78rem;color:var(--muted)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.xfer{color:var(--xfer)}
+.row2,.main{display:grid;grid-template-columns:1fr 1fr;gap:20px}.main{grid-template-columns:340px 1fr}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px}.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.kv:last-child{border-bottom:0}
+form{display:grid;gap:10px}.field{display:grid;gap:4px}.field label{font-size:.82rem;font-weight:700;color:var(--muted)}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px}.check input{width:auto;padding:0}.check small{display:block;color:var(--muted)}
+.msg,.status{font-size:.82rem;color:var(--muted);min-height:1.1em}.msg.err{color:var(--neg)}
+.list{display:grid}.tx{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}.bar{align-self:stretch;border-radius:2px}.bar.income{background:var(--pos)}.bar.expense{background:var(--neg)}.bar.transfer{background:var(--xfer)}.tx .d{font-weight:700}.meta{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:2px}.tx .r{text-align:right;display:grid;gap:5px;justify-items:end}.tag{font-size:.68rem;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:#f6ead3;color:var(--shared)}.del{font-size:.75rem;padding:4px 8px}.empty{text-align:center;color:var(--muted);padding:22px}
+.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px dashed var(--line);text-align:left}th{font-size:.72rem;color:var(--muted);text-transform:uppercase}td.n,th.n{text-align:right}
+.flowbar{height:12px;border-radius:999px;overflow:hidden;background:var(--line);display:flex}.flowbar .spent{background:var(--neg)}.flowbar .remain{background:var(--pos)}
+.duesum{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}.duesum>div{background:var(--surface);padding:12px}.duesum .v{font-size:1.2rem;font-weight:700;display:block;margin-top:3px}
+.loan{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:8px}.loan-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.loan-nums{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.84rem}.loan-nums b{color:var(--ink)}.overdue{color:var(--neg);font-weight:700}.reps{padding-left:12px;border-left:2px solid var(--line);display:grid;gap:4px;font-size:.82rem}.rep{display:flex;justify-content:space-between;gap:8px}
+.subform{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}.subrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.settings{display:grid;gap:12px}.item{display:flex;gap:6px;margin:5px 0}.item input{flex:1}.quick{display:grid;gap:6px;border-bottom:1px solid var(--line);padding-bottom:12px}
+@media(max-width:900px){.main{grid-template-columns:1fr}}@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.two{grid-template-columns:1fr}.duesum{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}}
 </style>
-
+</head>
+<body>
 <div class="wrap">
-  <header class="top">
-    <div class="total">
-      <div class="label">Total Money</div>
-      <div class="amt num" id="totalAmt">$0.00</div>
-      <p>All income minus all expenses. Transfers between accounts don't change it.</p>
-    </div>
-    <div class="top-actions">
-      <div class="month-nav" aria-label="Month">
-        <button class="ghost" id="prevM" aria-label="Previous month">‹</button>
-        <span id="monthLbl" class="num"></span>
-        <button class="ghost" id="nextM" aria-label="Next month">›</button>
-      </div>
-    </div>
-  </header>
-
-  <section class="stats" aria-label="This month">
-    <div class="stat"><span class="label">Income</span><span class="v num pos" id="sIncome">$0.00</span><span class="s" id="sIncomeN">0 entries</span></div>
-    <div class="stat"><span class="label">Expenses</span><span class="v num neg" id="sExpense">$0.00</span><span class="s" id="sExpenseN">0 entries</span></div>
-    <div class="stat"><span class="label">Net change</span><span class="v num" id="sNet">$0.00</span><span class="s">Change to Total Money</span></div>
-    <div class="stat"><span class="label">Shared expenses</span><span class="v num" id="sShared">$0.00</span><span class="s" id="sSharedS">0% of expenses</span></div>
-  </section>
-
-  <div class="row2">
-    <section class="panel">
-      <h2>Accounts</h2>
-      <div id="acctList"></div>
-      <div class="kv"><span class="k label">Sum of accounts</span><span class="num" id="acctSum">$0.00</span></div>
-    </section>
-    <section class="panel">
-      <h2>Paid by, this month</h2>
-      <div id="paidList"></div>
-    </section>
+<header>
+  <div class="total">
+    <div class="label">Total Money</div>
+    <div class="amt num" id="totalAmt">$0.00</div>
+    <p id="totalNote">Opening balances + income − expenses. Transfers do not change total money.</p>
+    <p id="dueNote"></p>
   </div>
-
-  <div class="main">
-    <section class="panel" aria-labelledby="addH">
-      <h2 id="addH">Add a transaction</h2>
-      <div class="seg" role="group" aria-label="Type">
-        <button type="button" data-type="expense" aria-pressed="true">Expense</button>
-        <button type="button" data-type="income" aria-pressed="false">Income</button>
-        <button type="button" data-type="transfer" aria-pressed="false">Transfer</button>
-      </div>
-      <form id="txForm" novalidate>
-        <div class="two">
-          <div class="field"><label for="fAmount">Amount (AUD)</label><input id="fAmount" inputmode="decimal" placeholder="0.00" autocomplete="off"></div>
-          <div class="field"><label for="fDate">Date</label><input id="fDate" type="date"></div>
-        </div>
-        <div class="field"><label for="fDesc">Description</label><input id="fDesc" placeholder="Groceries, rent, pay…" autocomplete="off"></div>
-        <div class="field" data-for="income expense"><label for="fCat">Category</label><input id="fCat" list="catList" placeholder="Optional" autocomplete="off"><datalist id="catList"></datalist></div>
-        <div class="two">
-          <div class="field"><label for="fAccount" id="fAccountLbl">Account</label><select id="fAccount"></select></div>
-          <div class="field" data-for="transfer"><label for="fTo">To account</label><select id="fTo"></select></div>
-          <div class="field" data-for="expense"><label for="fPaidBy">Paid by</label><select id="fPaidBy"></select></div>
-          <div class="field" data-for="income"><label for="fReceivedBy">Received by</label><select id="fReceivedBy"></select></div>
-        </div>
-        <label class="check" data-for="expense" for="fShared"><input type="checkbox" id="fShared"><span>Shared<small>This expense relates to both people.</small></span></label>
-        <button class="primary" type="submit" id="fSubmit">Add expense</button>
-        <div class="msg" id="fMsg" role="status"></div>
-      </form>
-    </section>
-
-    <section class="panel" aria-labelledby="listH">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-        <h2 id="listH">Transactions</h2>
-        <div class="filters" role="group" aria-label="Filter">
-          <button class="chip" data-f="all" aria-pressed="true">All</button>
-          <button class="chip" data-f="income" aria-pressed="false">Income</button>
-          <button class="chip" data-f="expense" aria-pressed="false">Expenses</button>
-          <button class="chip" data-f="transfer" aria-pressed="false">Transfers</button>
-          <button class="chip" data-f="shared" aria-pressed="false">Shared</button>
-        </div>
-      </div>
-      <div class="list" id="txList"><div class="empty">Loading your transactions…</div></div>
-    </section>
+  <div class="top-actions">
+    <div class="seg" style="min-width:150px">
+      <button type="button" data-period="month" aria-pressed="true">Month</button>
+      <button type="button" data-period="week" aria-pressed="false">Week</button>
+    </div>
+    <div class="month-nav"><button id="prev">‹</button><span id="periodLbl"></span><button id="next">›</button></div>
   </div>
+</header>
 
-  <section class="panel">
-    <details>
-      <summary>People and accounts</summary>
-      <div class="settings" style="margin-top:12px">
-        <div class="row2">
-          <div class="list-edit">
-            <span class="label">People</span>
-            <div id="peopleEdit"></div>
-          </div>
-          <div class="list-edit">
-            <span class="label">Accounts</span>
-            <div id="acctEdit"></div>
-            <div class="item"><input id="newAcct" placeholder="New account name"><button type="button" id="addAcct">Add</button></div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="primary" type="button" id="saveCfg">Save</button><span class="msg" id="cfgMsg"></span></div>
-      </div>
-    </details>
-  </section>
-  <div class="status" id="status"></div>
+<section class="stats">
+  <div class="stat"><span class="label">Total Income</span><span class="v pos num" id="sIncome">$0.00</span><span class="s" id="sIncomeN">0 entries</span></div>
+  <div class="stat"><span class="label">Total Expenses</span><span class="v neg num" id="sExpense">$0.00</span><span class="s" id="sExpenseN">0 entries</span></div>
+  <div class="stat"><span class="label">Net Change</span><span class="v num" id="sNet">$0.00</span><span class="s">Income − expenses</span></div>
+  <div class="stat"><span class="label">% Spent</span><span class="v num" id="sPct">—</span><span class="s">Expenses ÷ income</span></div>
+  <div class="stat"><span class="label">% Remaining</span><span class="v num" id="sRemain">—</span><span class="s">Net ÷ income</span></div>
+  <div class="stat"><span class="label">Top Category</span><span class="v" id="sTop">—</span><span class="s" id="sTopS">No expenses yet</span></div>
+</section>
+
+<div class="row2">
+<section class="panel"><h2>Accounts</h2><div id="acctList"></div><div class="kv"><span class="label">Sum of accounts</span><b class="num" id="acctSum">$0.00</b></div><div id="acctCheck" class="status"></div></section>
+<section class="panel"><h2 id="peopleTitle">Income by person</h2><div id="peopleList"></div></section>
+</div>
+
+<section class="panel">
+<h2>Where Our Money Went</h2>
+<div class="flowbar"><span class="spent" id="flowSpent" style="width:0"></span><span class="remain" id="flowRemain" style="width:0"></span></div>
+<div class="status" id="flowText"></div>
+<div class="tablewrap"><table><thead><tr><th>Category</th><th class="n">Amount</th><th class="n">% Spending</th><th class="n">% Income</th></tr></thead><tbody id="catBody"></tbody><tfoot id="catFoot"></tfoot></table></div>
+</section>
+
+<section class="panel">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2>Outstanding Due</h2><button class="primary" id="lendBtn">Lend money</button></div>
+<div class="status">Money lent to someone and still expected back. Lending and repayments are not income or expenses.</div>
+<div class="duesum"><div><span class="label">Total Money</span><span class="v num" id="dTotal">$0.00</span></div><div><span class="label">Outstanding Due</span><span class="v num" id="dDue">$0.00</span></div><div><span class="label">Money + Due</span><span class="v num" id="dBoth">$0.00</span></div></div>
+<form class="subform" id="loanForm" hidden>
+<strong id="loanFormTitle">Lend money</strong>
+<div class="subrow"><div class="field"><label>Person / Name</label><input id="lName" placeholder="Sarah"></div><div class="field"><label>Amount Lent</label><input id="lAmount" inputmode="decimal" placeholder="100"></div><div class="field"><label>Date Lent</label><input id="lDate" type="date"></div><div class="field"><label>Lent from account</label><select id="lAccount"></select></div><div class="field"><label>Due date</label><input id="lDue" type="date"></div></div>
+<div class="field"><label>Notes</label><input id="lNotes" placeholder="Optional"></div>
+<div class="dueactions"><button class="primary" type="submit">Save loan</button><button type="button" id="lCancel">Cancel</button></div><div class="msg" id="lMsg"></div>
+</form>
+<div id="loanList"></div>
+</section>
+
+<div class="main">
+<section class="panel">
+<div class="quick"><label class="label">Quick entry</label><div style="display:flex;gap:6px"><input id="quick" placeholder="-50 Uber nab"><button id="quickAdd">Add</button></div><small class="status">Examples: +1200 salary nab Raman · -50 Uber nab · transfer 200 nab to cash</small></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>Add a transaction</h2><button class="ghost" id="cancelEdit" hidden>Cancel edit</button></div>
+<div class="seg"><button type="button" data-type="expense" aria-pressed="true">Expense</button><button type="button" data-type="income" aria-pressed="false">Income</button><button type="button" data-type="transfer" aria-pressed="false">Transfer</button></div>
+<form id="txForm">
+<div class="two"><div class="field"><label>Amount (AUD)</label><input id="amount" inputmode="decimal" placeholder="0.00"></div><div class="field"><label>Date</label><input id="date" type="date"></div></div>
+<div class="field" id="catField"><label>Category</label><input id="category" list="cats" placeholder="Optional"><datalist id="cats"></datalist></div>
+<div class="field"><label>Description</label><input id="desc" placeholder="Groceries, rent, pay…"></div>
+<div class="two"><div class="field"><label id="accountLabel">From account</label><select id="account"></select></div><div class="field" id="toField"><label>To account</label><select id="toAccount"></select></div><div class="field" id="personField"><label id="personLabel">Paid by</label><select id="person"></select></div></div>
+<label class="check" id="sharedField"><input type="checkbox" id="shared"><span>Shared<small>This expense relates to both people.</small></span></label>
+<div class="field"><label>Notes</label><input id="notes" placeholder="Optional"></div>
+<button class="primary" id="submitTx">Add expense</button><div class="msg" id="txMsg"></div>
+</form>
+</section>
+
+<section class="panel">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><h2>Transactions</h2><div class="filters"><button data-filter="all">All</button><button data-filter="income">Income</button><button data-filter="expense">Expenses</button><button data-filter="transfer">Transfers</button><button data-filter="shared">Shared</button></div></div>
+<div id="txList"></div>
+</section>
+</div>
+
+<section class="panel">
+<details><summary>People, accounts and categories</summary>
+<div class="settings">
+<div class="row2">
+<div><span class="label">People</span><div id="peopleEdit"></div></div>
+<div><span class="label">Accounts and opening balances</span><div id="acctEdit"></div><div class="item"><input id="newAcct" placeholder="New account"><button id="addAcct">Add</button></div></div>
+</div>
+<div><span class="label">Categories</span><div id="catEdit"></div><div class="item"><input id="newCat" placeholder="New category"><button id="addCat">Add</button></div></div>
+<button class="primary" id="saveCfg">Save settings</button><div class="msg" id="cfgMsg"></div>
+</div></details>
+</section>
+<div class="status" id="status"></div>
 </div>
 
 <script>
-(function(){
-const $=s=>document.querySelector(s);
+(()=> {
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fmt=new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'});
 const money=c=>fmt.format((c||0)/100);
-const DEFAULT_CFG={people:[{id:'p1',name:'Person 1'},{id:'p2',name:'Person 2'}],accounts:[{id:'a1',name:'Bank account'},{id:'a2',name:'Cash'}]};
-let cfg=JSON.parse(JSON.stringify(DEFAULT_CFG));
-let txs=[]; let db=null; let canWrite=true;
-let type='expense', filter='all';
-const now=new Date(); let viewY=now.getFullYear(), viewM=now.getMonth();
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-$('#fDate').value=today();
+const today=()=>{const d=new Date();return d.toISOString().slice(0,10)};
+const parseMoney=s=>{s=String(s).replace(/[$,\s]/g,'');if(!/^\d+(\.\d{0,2})?$/.test(s))return null;const n=Math.round(parseFloat(s)*100);return n>0?n:null};
+const clone=x=>JSON.parse(JSON.stringify(x));
+const DEFAULT_CATS=['Rent','Groceries','Transport','Myki','Uber','Petrol','Car','Mobile','Insurance','Health','Food','Makeup','Skincare','Shopping','Entertainment','Subscriptions','Loan','Miscellaneous'];
+const DEFAULT_CFG={people:[{id:'p1',name:'Raman'},{id:'p2',name:'Robin'}],accounts:[{id:'a1',name:'NAB',opening:277380},{id:'a2',name:'Cash',opening:122500},{id:'a3',name:'Commonwealth',opening:0}],categories:DEFAULT_CATS,openingDate:today()};
+const TXKEY='moneyLedger.transactions.v1', CFGKEY='moneyLedger.config.v1', LOANKEY='moneyLedger.loans.v1';
+let cfg=clone(DEFAULT_CFG),txs=[],loans=[],type='expense',filter='all',period='month',editingId=null;
+let cursor=new Date(); cursor.setDate(1);
+let weekStart=new Date(); weekStart.setDate(weekStart.getDate()-((weekStart.getDay()+6)%7));
+const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+cfg=read(CFGKEY,DEFAULT_CFG); txs=read(TXKEY,[]); loans=read(LOANKEY,[]);
+if(!cfg.categories)cfg.categories=DEFAULT_CATS.slice(); if(!cfg.openingDate)cfg.openingDate=today();
+$('#date').value=today(); $('#lDate').value=today();
 
-const nameOf=(list,id)=>{const x=list.find(i=>i.id===id);return x?x.name:'(removed)'};
-const monthKey=()=>viewY+'-'+String(viewM+1).padStart(2,'0');
-const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e};
-
-function render(){
-  // Total Money: every income adds, every expense subtracts, transfers ignored
-  let total=0; const acct={}; cfg.accounts.forEach(a=>acct[a.id]=0);
-  for(const t of txs){
-    if(t.type==='income'){total+=t.amount; acct[t.account]=(acct[t.account]||0)+t.amount}
-    else if(t.type==='expense'){total-=t.amount; acct[t.account]=(acct[t.account]||0)-t.amount}
-    else if(t.type==='transfer'){acct[t.account]=(acct[t.account]||0)-t.amount; acct[t.toAccount]=(acct[t.toAccount]||0)+t.amount}
-  }
-  const tEl=$('#totalAmt'); tEl.textContent=money(total); tEl.classList.toggle('neg',total<0);
-
-  // month
-  $('#monthLbl').textContent=new Date(viewY,viewM,1).toLocaleDateString('en-AU',{month:'long',year:'numeric'});
-  const mk=monthKey(); const mtx=txs.filter(t=>(t.date||'').startsWith(mk));
-  const inc=mtx.filter(t=>t.type==='income'), exp=mtx.filter(t=>t.type==='expense');
-  const sum=a=>a.reduce((s,t)=>s+t.amount,0);
-  const si=sum(inc), se=sum(exp), sh=sum(exp.filter(t=>t.shared));
-  $('#sIncome').textContent=money(si); $('#sIncomeN').textContent=inc.length+(inc.length===1?' entry':' entries');
-  $('#sExpense').textContent=money(se); $('#sExpenseN').textContent=exp.length+(exp.length===1?' entry':' entries');
-  const net=si-se, nEl=$('#sNet'); nEl.textContent=(net>0?'+':'')+money(net); nEl.className='v num '+(net>0?'pos':net<0?'neg':'');
-  $('#sShared').textContent=money(sh); $('#sSharedS').textContent=(se?Math.round(sh/se*100):0)+'% of expenses';
-
-  // accounts
-  const al=$('#acctList'); al.replaceChildren();
-  const ids=new Set(cfg.accounts.map(a=>a.id)); Object.keys(acct).forEach(id=>ids.add(id));
-  let asum=0;
-  ids.forEach(id=>{const r=el('div','kv');r.append(el('span','k',nameOf(cfg.accounts,id)));const v=el('span','num'+(acct[id]<0?' neg':''),money(acct[id]||0));r.append(v);al.append(r);asum+=acct[id]||0});
-  $('#acctSum').textContent=money(asum);
-
-  // paid by
-  const pl=$('#paidList'); pl.replaceChildren();
-  if(!exp.length){pl.append(el('div','empty','No expenses this month yet.'))}
-  else{
-    const pids=new Set(cfg.people.map(p=>p.id)); exp.forEach(t=>pids.add(t.paidBy));
-    pids.forEach(pid=>{
-      const all=exp.filter(t=>t.paidBy===pid); const shared=sum(all.filter(t=>t.shared));
-      const r=el('div','kv'); const k=el('span','k'); k.append(el('div',null,nameOf(cfg.people,pid)));
-      k.append(el('div','status',money(shared)+' of it shared'));
-      r.append(k, el('span','num',money(sum(all)))); pl.append(r);
-    });
-  }
-
-  // list
-  const list=$('#txList'); list.replaceChildren();
-  let rows=mtx.slice();
-  if(filter==='shared') rows=rows.filter(t=>t.type==='expense'&&t.shared);
-  else if(filter!=='all') rows=rows.filter(t=>t.type===filter);
-  rows.sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||0)-(a.createdAt||0));
-  if(!rows.length){list.append(el('div','empty', txs.length?'Nothing here for this month.':'No transactions yet. Add your first one with the form.'));return}
-  for(const t of rows){
-    const r=el('div','tx'); r.append(el('span','bar '+t.type));
-    const mid=el('div'); mid.append(el('div','d',t.description||(t.type[0].toUpperCase()+t.type.slice(1))));
-    const meta=el('div','meta');
-    const d=new Date(t.date+'T00:00:00'); meta.append(el('span',null,isNaN(d)?t.date:d.toLocaleDateString('en-AU',{day:'numeric',month:'short'})));
-    if(t.type==='transfer') meta.append(el('span',null,nameOf(cfg.accounts,t.account)+' → '+nameOf(cfg.accounts,t.toAccount)));
-    else meta.append(el('span',null,nameOf(cfg.accounts,t.account)));
-    if(t.type==='expense') meta.append(el('span',null,'Paid by '+nameOf(cfg.people,t.paidBy)));
-    if(t.type==='income'&&t.receivedBy) meta.append(el('span',null,'Received by '+nameOf(cfg.people,t.receivedBy)));
-    if(t.category) meta.append(el('span',null,t.category));
-    if(t.type==='expense'&&t.shared) meta.append(el('span','tag','Shared'));
-    mid.append(meta); r.append(mid);
-    const right=el('div','r');
-    const sign=t.type==='income'?'+':t.type==='expense'?'−':'';
-    right.append(el('span','a num '+(t.type==='income'?'pos':t.type==='expense'?'neg':'transfer'),sign+money(t.amount)));
-    if(db&&canWrite){
-      const b=el('button','del','Delete'); b.type='button';
-      b.addEventListener('click',async()=>{
-        if(!b.classList.contains('confirm')){b.classList.add('confirm');b.textContent='Confirm delete';setTimeout(()=>{b.classList.remove('confirm');b.textContent='Delete'},4000);return}
-        b.disabled=true; try{await db.collection('transactions').doc(t.id).delete()}catch(e){b.disabled=false;setStatus('Could not delete. Try again.')}
-      });
-      right.append(b);
-    }
-    r.append(right); list.append(r);
-  }
-}
-
-function fillSelects(){
-  const opts=(sel,list)=>{const cur=sel.value;sel.replaceChildren();list.forEach(i=>{const o=el('option',null,i.name);o.value=i.id;sel.append(o)});if(list.some(i=>i.id===cur))sel.value=cur};
-  opts($('#fAccount'),cfg.accounts); opts($('#fTo'),cfg.accounts); opts($('#fPaidBy'),cfg.people); opts($('#fReceivedBy'),cfg.people);
-  if(type==='transfer'&&$('#fTo').value===$('#fAccount').value&&cfg.accounts[1]) $('#fTo').value=cfg.accounts.find(a=>a.id!==$('#fAccount').value).id;
-  const cats=new Set(txs.map(t=>t.category).filter(Boolean)); const dl=$('#catList'); dl.replaceChildren(); cats.forEach(c=>{const o=el('option');o.value=c;dl.append(o)});
-}
-function setType(t){
-  type=t; document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===t)));
-  document.querySelectorAll('[data-for]').forEach(n=>n.hidden=!n.dataset.for.split(' ').includes(t));
-  $('#fAccountLbl').textContent=t==='transfer'?'From account':t==='income'?'Into account':'From account';
-  $('#fSubmit').textContent='Add '+t; fillSelects();
-}
-document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>setType(b.dataset.type)));
-document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.f;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));render()}));
-$('#prevM').addEventListener('click',()=>{viewM--;if(viewM<0){viewM=11;viewY--}render()});
-$('#nextM').addEventListener('click',()=>{viewM++;if(viewM>11){viewM=0;viewY++}render()});
-
-function parseAmount(s){s=String(s).replace(/[$,\s]/g,'');if(!/^\d+(\.\d{0,2})?$/.test(s))return null;const c=Math.round(parseFloat(s)*100);return c>0?c:null}
-const fMsg=$('#fMsg'); const say=(m,err)=>{fMsg.textContent=m;fMsg.className='msg'+(err?' err':'')};
-$('#txForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!db){say('Saving isn\'t available in this view.',true);return}
-  const amount=parseAmount($('#fAmount').value); if(!amount){say('Enter an amount above zero, like 42.50.',true);return}
-  const date=$('#fDate').value; if(!date){say('Pick a date.',true);return}
-  const t={type,amount,date,description:$('#fDesc').value.trim().slice(0,120),account:$('#fAccount').value,createdAt:Date.now()};
-  if(type!=='transfer') t.category=$('#fCat').value.trim().slice(0,40);
-  if(type==='expense'){t.paidBy=$('#fPaidBy').value;t.shared=$('#fShared').checked}
-  if(type==='income') t.receivedBy=$('#fReceivedBy').value;
-  if(type==='transfer'){t.toAccount=$('#fTo').value;if(t.toAccount===t.account){say('Choose two different accounts.',true);return}}
-  $('#fSubmit').disabled=true;
-  try{await db.collection('transactions').add(t);say('Added '+type+' of '+money(amount)+'.');$('#fAmount').value='';$('#fDesc').value='';$('#fCat').value='';$('#fShared').checked=false;
-    const [y,m]=date.split('-').map(Number); viewY=y; viewM=m-1; render();
-  }catch(err){say(err&&err.code==='invalid_argument'?'You can view this ledger but not add to it.':'Could not save. Try again.',true)}
-  finally{$('#fSubmit').disabled=false}
-});
-
-// settings
-let draft=null;
-function renderSettings(){
-  draft=draft||JSON.parse(JSON.stringify(cfg));
-  const pe=$('#peopleEdit'); pe.replaceChildren();
-  draft.people.forEach((p,i)=>{const r=el('div','item');const inp=el('input');inp.id='person-'+p.id;inp.value=p.name;inp.setAttribute('aria-label','Person '+(i+1)+' name');inp.addEventListener('input',()=>p.name=inp.value);r.append(inp);pe.append(r)});
-  const ae=$('#acctEdit'); ae.replaceChildren();
-  draft.accounts.forEach(a=>{const r=el('div','item');const inp=el('input');inp.id='acct-'+a.id;inp.value=a.name;inp.setAttribute('aria-label','Account name');inp.addEventListener('input',()=>a.name=inp.value);r.append(inp);
-    const used=txs.some(t=>t.account===a.id||t.toAccount===a.id);
-    const b=el('button','ghost','Remove');b.type='button';b.disabled=used||draft.accounts.length<2;b.title=used?'This account has transactions':'';b.addEventListener('click',()=>{draft.accounts=draft.accounts.filter(x=>x!==a);renderSettings()});r.append(b);ae.append(r)});
-}
-$('#addAcct').addEventListener('click',()=>{const n=$('#newAcct').value.trim();if(!n)return;draft.accounts.push({id:'a'+Date.now().toString(36),name:n.slice(0,40)});$('#newAcct').value='';renderSettings()});
-$('#saveCfg').addEventListener('click',async()=>{
-  const m=$('#cfgMsg'); if(!db){m.textContent='Saving isn\'t available in this view.';return}
-  draft.people.forEach(p=>p.name=p.name.trim().slice(0,40)||'Person'); draft.accounts.forEach(a=>a.name=a.name.trim().slice(0,40)||'Account');
-  try{await db.doc('config/main').set({people:draft.people,accounts:draft.accounts});m.textContent='Saved.'}catch(e){m.textContent='Could not save. Try again.'}
-});
-
-function setStatus(s){$('#status').textContent=s}
-setType('expense'); renderSettings(); render();
-
-// Local browser storage database. This version runs directly on GitHub Pages and does not require Claude or Firebase.
-const STORAGE_TX='moneyLedger.transactions.v1';
-const STORAGE_CFG='moneyLedger.config.v1';
-const listeners={transactions:new Set(),config:new Set()};
-const safeParse=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch(e){return fallback}};
-const write=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
-const emit=(kind)=>{const snap=kind==='transactions'?{docs:safeParse(STORAGE_TX,[]).map(d=>({id:d.id,data:()=>({...d})}))}:{exists:!!localStorage.getItem(STORAGE_CFG),data:()=>safeParse(STORAGE_CFG,{})};listeners[kind].forEach(fn=>fn(snap));};
-const localDb={
-  doc(path){
-    if(path!=='config/main') throw new Error('Unsupported document');
-    return {
-      set(data){write(STORAGE_CFG,data);emit('config');return Promise.resolve()},
-      onSnapshot(fn,err){listeners.config.add(fn);try{fn({exists:!!localStorage.getItem(STORAGE_CFG),data:()=>safeParse(STORAGE_CFG,{})})}catch(e){if(err)err(e)}return()=>listeners.config.delete(fn)}
-    };
-  },
-  collection(name){
-    if(name!=='transactions') throw new Error('Unsupported collection');
-    return {
-      add(data){const rows=safeParse(STORAGE_TX,[]);const id='tx_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);rows.push({id,...data});write(STORAGE_TX,rows);emit('transactions');return Promise.resolve({id})},
-      doc(id){return {delete(){const rows=safeParse(STORAGE_TX,[]).filter(x=>x.id!==id);write(STORAGE_TX,rows);emit('transactions');return Promise.resolve()}}},
-      onSnapshot(fn,err){listeners.transactions.add(fn);try{fn({docs:safeParse(STORAGE_TX,[]).map(d=>({id:d.id,data:()=>({...d})}))})}catch(e){if(err)err(e)}return()=>listeners.transactions.delete(fn)}
-    };
-  }
+const nameOf=(list,id)=>{const x=list.find(v=>v.id===id);return x?x.name:'(removed)'};
+const startEnd=()=>{
+ if(period==='week'){const s=new Date(weekStart),e=new Date(s);e.setDate(e.getDate()+6);return [s,e]}
+ const s=new Date(cursor.getFullYear(),cursor.getMonth(),1),e=new Date(cursor.getFullYear(),cursor.getMonth()+1,0);return[s,e]
 };
+const iso=d=>d.toISOString().slice(0,10);
+const inRange=(t,s,e)=>t.date>=iso(s)&&t.date<=iso(e);
+const sum=a=>a.reduce((n,x)=>n+x.amount,0);
+const setMsg=(id,msg,err=false)=>{$(id).textContent=msg;$(id).className='msg'+(err?' err':'')};
 
-// Restore saved data and subscribe to changes. Data stays in this browser/device.
-db=localDb;
-if(!localStorage.getItem(STORAGE_CFG)) write(STORAGE_CFG,JSON.parse(JSON.stringify(DEFAULT_CFG)));
-try{
-  db.doc('config/main').onSnapshot(s=>{
-    if(s.exists){const d=s.data(); cfg={people:(d.people&&d.people.length?d.people:DEFAULT_CFG.people).map(x=>({...x})),accounts:(d.accounts&&d.accounts.length?d.accounts:DEFAULT_CFG.accounts).map(x=>({...x}))}}
-    draft=null; fillSelects(); renderSettings(); render();
-  },()=>setStatus('Could not load settings.'));
-  db.collection('transactions').onSnapshot(s=>{
-    txs=s.docs.map(d=>({id:d.id,...d.data()})).filter(t=>typeof t.amount==='number'&&t.amount>0);
-    fillSelects(); if(!$('details').open){draft=null;renderSettings()} render();
-  },()=>setStatus('Could not load transactions.'));
-  setStatus('Saved in this browser.');
-}catch(e){setStatus('Could not start local storage.');console.error(e)}
+function balances(){
+ const a={};cfg.accounts.forEach(x=>a[x.id]=Number(x.opening)||0);
+ const od=cfg.openingDate||'1900-01-01';
+ for(const t of txs){if(t.date<od)continue;
+   if(t.type==='income')a[t.account]=(a[t.account]||0)+t.amount;
+   if(t.type==='expense')a[t.account]=(a[t.account]||0)-t.amount;
+   if(t.type==='transfer'){a[t.account]=(a[t.account]||0)-t.amount;a[t.toAccount]=(a[t.toAccount]||0)+t.amount}
+ }
+ return a;
+}
+function totalMoney(){return Object.values(balances()).reduce((a,b)=>a+b,0)}
+function render(){
+ const [s,e]=startEnd(), rows=txs.filter(t=>inRange(t,s,e));
+ const inc=rows.filter(t=>t.type==='income'),exp=rows.filter(t=>t.type==='expense');
+ const income=sum(inc),expense=sum(exp),net=income-expense;
+ $('#totalAmt').textContent=money(totalMoney()); $('#totalAmt').className='amt num '+(totalMoney()<0?'neg':'');
+ $('#periodLbl').textContent=period==='week'?`${s.toLocaleDateString('en-AU',{day:'numeric',month:'short'})} – ${e.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}`:s.toLocaleDateString('en-AU',{month:'long',year:'numeric'});
+ $('#sIncome').textContent=money(income);$('#sExpense').textContent=money(expense);$('#sNet').textContent=(net>0?'+':'')+money(net);
+ $('#sIncomeN').textContent=`${inc.length} ${inc.length===1?'entry':'entries'}`;$('#sExpenseN').textContent=`${exp.length} ${exp.length===1?'entry':'entries'}`;
+ $('#sPct').textContent=income?Math.round(expense/income*100)+'%':'—';$('#sRemain').textContent=income?Math.round(net/income*100)+'%':'—';
+ const cats={};exp.forEach(t=>cats[t.category||'Uncategorised']=(cats[t.category||'Uncategorised']||0)+t.amount);
+ const top=Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];$('#sTop').textContent=top?top[0]:'—';$('#sTopS').textContent=top?money(top[1]):'No expenses yet';
+ const spentPct=income?Math.min(100,expense/income*100):0;$('#flowSpent').style.width=spentPct+'%';$('#flowRemain').style.width=Math.max(0,100-spentPct)+'%';$('#flowText').textContent=income?`${money(expense)} spent · ${money(Math.max(0,net))} remaining of income`:'No income in this period.';
+ const cb=$('#catBody');cb.replaceChildren();Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(c)}</td><td class="n num">${money(v)}</td><td class="n num">${expense?Math.round(v/expense*100):0}%</td><td class="n num">${income?Math.round(v/income*100):0}%</td>`;cb.append(tr)});$('#catFoot').innerHTML=expense?`<tr><td><b>Total</b></td><td class="n num"><b>${money(expense)}</b></td><td class="n">100%</td><td class="n">${income?Math.round(expense/income*100):0}%</td></tr>`:'';
+ const b=balances(),al=$('#acctList');al.replaceChildren();let as=0;cfg.accounts.forEach(a=>{const v=b[a.id]||0;as+=v;const r=document.createElement('div');r.className='kv';r.innerHTML=`<span>${esc(a.name)}</span><b class="num ${v<0?'neg':''}">${money(v)}</b>`;al.append(r)});$('#acctSum').textContent=money(as);$('#acctCheck').textContent=Math.abs(as-totalMoney())<1?'✓ Accounts reconcile with Total Money':'Check account balances';
+ const pl=$('#peopleList');pl.replaceChildren();cfg.people.forEach(p=>{const vals=inc.filter(t=>t.receivedBy===p.id);const r=document.createElement('div');r.className='kv';r.innerHTML=`<span>${esc(p.name)}</span><b class="num">${money(sum(vals))}</b>`;pl.append(r)});
+ renderLoans();renderTransactions(rows);fillSelects();renderSettings();
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderTransactions(rows){
+ let rws=rows.slice();if(filter==='shared')rws=rws.filter(t=>t.type==='expense'&&t.shared);else if(filter!=='all')rws=rws.filter(t=>t.type===filter);
+ rws.sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||0)-(a.createdAt||0));const box=$('#txList');box.replaceChildren();
+ if(!rws.length){box.innerHTML='<div class="empty">No transactions for this period.</div>';return}
+ rws.forEach(t=>{const row=document.createElement('div');row.className='tx';let meta=`${new Date(t.date+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'})} · ${esc(nameOf(cfg.accounts,t.account))}`;
+ if(t.type==='transfer')meta+=` → ${esc(nameOf(cfg.accounts,t.toAccount))}`;if(t.type==='expense')meta+=` · Paid by ${esc(nameOf(cfg.people,t.paidBy))}`;if(t.type==='income'&&t.receivedBy)meta+=` · ${esc(nameOf(cfg.people,t.receivedBy))}`;if(t.category)meta+=` · ${esc(t.category)}`;
+ row.innerHTML=`<span class="bar ${t.type}"></span><div><div class="d">${esc(t.description||t.type)}</div><div class="meta">${meta}${t.shared?` <span class="tag">Shared</span>`:''}${t.notes?`<span>${esc(t.notes)}</span>`:''}</div></div><div class="r"><span class="num ${t.type==='income'?'pos':t.type==='expense'?'neg':'xfer'}">${t.type==='income'?'+':t.type==='expense'?'−':''}${money(t.amount)}</span><div><button class="del" data-edit="${t.id}">Edit</button> <button class="del" data-del="${t.id}">Delete</button></div></div>`;box.append(row)});
+ $$('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Delete this transaction?')){txs=txs.filter(t=>t.id!==b.dataset.del);write(TXKEY,txs);render()}});
+ $$('[data-edit]').forEach(b=>b.onclick=()=>editTx(b.dataset.edit));
+}
+function fillSelects(){
+ const opts=(id,list)=>{const s=$(id),cur=s.value;s.replaceChildren();list.forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.name;s.append(o)});if(list.some(x=>x.id===cur))s.value=cur};
+ opts('#account',cfg.accounts);opts('#toAccount',cfg.accounts);opts('#person',cfg.people);opts('#lAccount',cfg.accounts);
+ const dl=$('#cats');dl.replaceChildren();cfg.categories.forEach(c=>{const o=document.createElement('option');o.value=c;dl.append(o)});
+}
+function setType(t){type=t;$$('[data-type]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===t)));$('#toField').hidden=t!=='transfer';$('#personField').hidden=t==='transfer';$('#sharedField').hidden=t!=='expense';$('#catField').hidden=t==='transfer';$('#accountLabel').textContent=t==='income'?'Into account':'From account';$('#personLabel').textContent=t==='income'?'Received by':'Paid by';$('#submitTx').textContent=editingId?'Save changes':'Add '+t;fillSelects()}
+function resetForm(){editingId=null;$('#cancelEdit').hidden=true;$('#txForm').reset();$('#date').value=today();setType('expense');setMsg('#txMsg','')}
+function editTx(id){const t=txs.find(x=>x.id===id);if(!t)return;editingId=id;setType(t.type);$('#amount').value=(t.amount/100).toFixed(2);$('#date').value=t.date;$('#category').value=t.category||'';$('#desc').value=t.description||'';$('#account').value=t.account;$('#toAccount').value=t.toAccount||'';$('#person').value=t.type==='income'?(t.receivedBy||''):t.paidBy||'';$('#shared').checked=!!t.shared;$('#notes').value=t.notes||'';$('#cancelEdit').hidden=false;window.scrollTo({top:document.querySelector('.main').offsetTop-20,behavior:'smooth'});setMsg('#txMsg','Editing transaction.')}
+$('#txForm').onsubmit=e=>{e.preventDefault();const amount=parseMoney($('#amount').value);if(!amount)return setMsg('#txMsg','Enter a valid amount.',true);const t={id:editingId||'tx_'+Date.now().toString(36),type,amount,date:$('#date').value,description:$('#desc').value.trim().slice(0,120),category:type==='transfer'?'':$('#category').value.trim().slice(0,50),account:$('#account').value,createdAt:editingId?(txs.find(x=>x.id===editingId)?.createdAt||Date.now()):Date.now(),notes:$('#notes').value.trim().slice(0,200)};if(type==='transfer'){t.toAccount=$('#toAccount').value;if(t.toAccount===t.account)return setMsg('#txMsg','Choose different accounts.',true)}else if(type==='expense'){t.paidBy=$('#person').value;t.shared=$('#shared').checked}else{t.receivedBy=$('#person').value}if(editingId)txs=txs.map(x=>x.id===editingId?t:x);else txs.push(t);write(TXKEY,txs);setMsg('#txMsg',editingId?'Saved changes.':'Added transaction.');resetForm();render()};
+$('#cancelEdit').onclick=resetForm;
 
-// Keep multiple open tabs in sync.
-window.addEventListener('storage',e=>{
-  if(e.key===STORAGE_TX) emit('transactions');
-  if(e.key===STORAGE_CFG) emit('config');
-});
+$$('[data-type]').forEach(b=>b.onclick=()=>setType(b.dataset.type));$$('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;$$('[data-filter]').forEach(x=>x.style.fontWeight=x===b?'700':'600');render()});
+$$('[data-period]').forEach(b=>b.onclick=()=>{period=b.dataset.period;$$('[data-period]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()});
+$('#prev').onclick=()=>{if(period==='month'){cursor.setMonth(cursor.getMonth()-1)}else weekStart.setDate(weekStart.getDate()-7);render()};
+$('#next').onclick=()=>{if(period==='month'){cursor.setMonth(cursor.getMonth()+1)}else weekStart.setDate(weekStart.getDate()+7);render()};
+
+$('#quickAdd').onclick=()=>{const s=$('#quick').value.trim();const m=s.match(/^([+-])\s*(\d+(?:\.\d{1,2})?)\s+(.+)$/i);const tr=s.match(/^transfer\s+(\d+(?:\.\d{1,2})?)\s+(.+?)\s+to\s+(.+)$/i);if(tr){const a=parseMoney(tr[1]);const from=cfg.accounts.find(x=>x.name.toLowerCase()===tr[2].trim().toLowerCase()||x.id===tr[2].trim());const to=cfg.accounts.find(x=>x.name.toLowerCase()===tr[3].trim().toLowerCase()||x.id===tr[3].trim());if(!a||!from||!to)return alert('Use: transfer 200 NAB to Cash');txs.push({id:'tx_'+Date.now().toString(36),type:'transfer',amount:a,date:today(),description:'Transfer',account:from.id,toAccount:to.id,createdAt:Date.now()});write(TXKEY,txs);$('#quick').value='';return render()}if(!m)return alert('Use: +1200 salary NAB or -50 Uber NAB');const a=parseMoney(m[2]);const text=m[3].trim().split(/\s+/);const account=cfg.accounts.find(x=>x.name.toLowerCase()===text[text.length-1].toLowerCase()||x.id===text[text.length-1]);if(!a||!account)return alert('Put the account name at the end, e.g. -50 Uber NAB');const description=text.slice(0,-1).join(' ');if(m[1]==='+'){txs.push({id:'tx_'+Date.now().toString(36),type:'income',amount:a,date:today(),description,account:account.id,receivedBy:cfg.people[0]?.id,createdAt:Date.now()})}else{txs.push({id:'tx_'+Date.now().toString(36),type:'expense',amount:a,date:today(),description,account:account.id,paidBy:cfg.people[0]?.id,shared:false,createdAt:Date.now()})}write(TXKEY,txs);$('#quick').value='';render()};
+
+function renderLoans(){
+ const due=loans.reduce((n,l)=>n+(l.amount||0)-(l.repayments||[]).reduce((a,r)=>a+r.amount,0),0);
+ $('#dTotal').textContent=money(totalMoney());$('#dDue').textContent=money(due);$('#dBoth').textContent=money(totalMoney()+due);$('#dueNote').textContent=due?`Outstanding due: ${money(due)}`:'';
+ const box=$('#loanList');box.replaceChildren();if(!loans.length){box.innerHTML='<div class="empty">No outstanding loans recorded.</div>';return}
+ loans.forEach(l=>{const paid=sum(l.repayments||[]),remain=l.amount-paid,over=l.dueDate&&remain>0&&l.dueDate<today();const d=document.createElement('div');d.className='loan';d.innerHTML=`<div class="loan-top"><b>${esc(l.name)}</b><span class="${over?'overdue':''}">${remain<=0?'Paid':over?'Overdue':'Outstanding'}</span></div><div class="loan-nums"><span>Lent <b>${money(l.amount)}</b></span><span>Paid back <b>${money(paid)}</b></span><span>Remaining <b>${money(remain)}</b></span>${l.dueDate?`<span>Due <b>${esc(l.dueDate)}</b></span>`:''}</div>${l.notes?`<div class="status">${esc(l.notes)}</div>`:''}<div class="dueactions"><button data-repay="${l.id}" ${remain<=0?'disabled':''}>Record repayment</button><button data-delete-loan="${l.id}">Delete</button></div>${(l.repayments||[]).length?`<div class="reps">${l.repayments.map(r=>`<div class="rep"><span>${esc(r.date)}</span><b>${money(r.amount)}</b></div>`).join('')}</div>`:''}`;box.append(d)});
+ $$('[data-repay]').forEach(b=>b.onclick=()=>recordRepayment(b.dataset.repay));$$('[data-delete-loan]').forEach(b=>b.onclick=()=>{if(confirm('Delete this loan?')){loans=loans.filter(l=>l.id!==b.dataset.deleteLoan);write(LOANKEY,loans);render()}});
+}
+$('#lendBtn').onclick=()=>{$('#loanForm').hidden=false;$('#lDate').value=today();$('#lName').focus()};$('#lCancel').onclick=()=>{$('#loanForm').hidden=true};
+$('#loanForm').onsubmit=e=>{e.preventDefault();const amount=parseMoney($('#lAmount').value),name=$('#lName').value.trim();if(!amount||!name)return setMsg('#lMsg','Enter name and amount.',true);loans.push({id:'loan_'+Date.now().toString(36),name,amount,date:$('#lDate').value,account:$('#lAccount').value,dueDate:$('#lDue').value,notes:$('#lNotes').value.trim(),repayments:[]});write(LOANKEY,loans);$('#loanForm').reset();$('#loanForm').hidden=true;render()};
+function recordRepayment(id){const l=loans.find(x=>x.id===id);if(!l)return;const paid=sum(l.repayments||[]),remain=l.amount-paid;const raw=prompt(`Remaining: ${money(remain)}\nEnter repayment amount:`);if(raw===null)return;const a=parseMoney(raw);if(!a||a>remain)return alert('Enter a valid amount no more than the remaining balance.');l.repayments=l.repayments||[];l.repayments.push({amount:a,date:today()});write(LOANKEY,loans);render()}
+
+function renderSettings(){
+ const pe=$('#peopleEdit');pe.replaceChildren();cfg.people.forEach(p=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<input value="${esc(p.name)}" data-person-edit="${p.id}">`;pe.append(d)});
+ const ae=$('#acctEdit');ae.replaceChildren();cfg.accounts.forEach(a=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<input value="${esc(a.name)}" data-acct-name="${a.id}" placeholder="Account"><input value="${((a.opening||0)/100).toFixed(2)}" data-acct-opening="${a.id}" inputmode="decimal" style="max-width:130px" placeholder="Opening">`;ae.append(d)});
+ const ce=$('#catEdit');ce.replaceChildren();cfg.categories.forEach((c,i)=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<input value="${esc(c)}" data-cat="${i}"><button data-cat-del="${i}">Remove</button>`;ce.append(d)});
+ $$('[data-cat-del]').forEach(b=>b.onclick=()=>{cfg.categories.splice(Number(b.dataset.catDel),1);renderSettings()});
+}
+$('#addAcct').onclick=()=>{const n=$('#newAcct').value.trim();if(n){cfg.accounts.push({id:'a_'+Date.now().toString(36),name:n,opening:0});$('#newAcct').value='';render()}};
+$('#addCat').onclick=()=>{const n=$('#newCat').value.trim();if(n&&!cfg.categories.some(c=>c.toLowerCase()===n.toLowerCase())){cfg.categories.push(n);$('#newCat').value='';render()}};
+$('#saveCfg').onclick=()=>{$$('[data-person-edit]').forEach(i=>{const p=cfg.people.find(x=>x.id===i.dataset.personEdit);if(p)p.name=i.value.trim()||p.name});$$('[data-acct-name]').forEach(i=>{const a=cfg.accounts.find(x=>x.id===i.dataset.acctName);if(a)a.name=i.value.trim()||a.name});$$('[data-acct-opening]').forEach(i=>{const a=cfg.accounts.find(x=>x.id===i.dataset.acctOpening);const v=parseMoney(i.value);if(a&&v!==null)a.opening=v});$$('[data-cat]').forEach(i=>{cfg.categories[Number(i.dataset.cat)]=i.value.trim()||cfg.categories[Number(i.dataset.cat)]});write(CFGKEY,cfg);setMsg('#cfgMsg','Settings saved.');render()};
+
+setType('expense');render();
 })();
 </script>
-
-</body></html>
+</body>
+</html>
